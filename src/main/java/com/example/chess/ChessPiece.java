@@ -1,6 +1,6 @@
 package com.example.chess;
 
-public abstract class ChessPiece {
+public class ChessPiece {
     private int xLocation;
     private int yLocation;
     private PieceType pieceType;
@@ -31,6 +31,8 @@ public abstract class ChessPiece {
         this.pieceColor = pieceColor;
     }
 
-    public abstract void move();
-    public abstract void takePiece();
+    public void move(int userX,int userY){
+        setXLocation(userX);
+        setYLocation(userY);
+    }
 }
