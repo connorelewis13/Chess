@@ -24,6 +24,8 @@ public class ChessPiece {
 
     @Override
     public String toString(){
-        return this.pieceType+" ";
+        if(this.pieceColor==PieceColor.BLACK) return "B." + this.pieceType+" ";
+        else if(this.pieceColor==PieceColor.WHITE) return "W." + this.pieceType+" ";
+        return "";
     }
 }
