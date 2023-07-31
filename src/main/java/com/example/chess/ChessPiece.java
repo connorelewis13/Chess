@@ -21,4 +21,9 @@ public class ChessPiece {
     public void setPieceColor(PieceColor pieceColor) {
         this.pieceColor = pieceColor;
     }
+
+    @Override
+    public String toString(){
+        return this.pieceType+" ";
+    }
 }

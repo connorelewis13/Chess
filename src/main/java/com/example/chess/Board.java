@@ -17,7 +17,7 @@ public class Board {
         boardMap.put(new int[]{x,y},new Square(chessPiece));
     }
     
-    private void resetBoard(){
+    public void resetBoard(){
         setPawns();
         setSpecialPieces();
     }
@@ -35,5 +35,16 @@ public class Board {
             putPiece(x,2, new ChessPiece(PieceColor.WHITE,PieceType.PAWN));
             putPiece(x,7, new ChessPiece(PieceColor.BLACK,PieceType.PAWN));
         }
+    }
+    @Override
+    public String toString(){
+        String returnString = "";
+        for(int x=1;x<=8;x++){
+            for(int y=8;y>=1;y--){
+                returnString += boardMap.get(new int[]{x,y}).getSqaurePiece().toString();
+            }
+            returnString+="/n";
+        }
+        return returnString;
     }
 }
