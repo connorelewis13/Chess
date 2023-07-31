@@ -18,6 +18,10 @@ public class ChessApplication extends Application {
     }
 
     public static void main(String[] args) {
+        Board testBoard = new Board();
+        System.out.println(testBoard);
+        testBoard.resetBoard();
+        System.out.println(testBoard);
         launch();
     }
 }

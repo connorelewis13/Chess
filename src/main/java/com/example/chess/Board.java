@@ -1,20 +1,21 @@
 package com.example.chess;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Board {
-    public HashMap<int[],Square> boardMap;
+    private HashMap<Coordinates,Square> boardMap;
     //1,1 will be bottom left
     public Board(){
         this.boardMap = new HashMap<>();
-        for(int x=1;x<=8;x++){
-            for(int y=1;y<=8;y++){
-                boardMap.put(new int[]{x,y},new Square(null));
+        for(int x=1;x<9;x++){
+            for(int y=1;y<9;y++){
+                this.boardMap.put(new Coordinates(x,y),new Square(new ChessPiece(PieceColor.WHITE,PieceType.PAWN)));
             }
         }
     }
     private void putPiece(int x, int y,ChessPiece chessPiece){
-        boardMap.put(new int[]{x,y},new Square(chessPiece));
+        this.boardMap.put(new Coordinates(x,y),new Square(chessPiece));
     }
     
     public void resetBoard(){
@@ -39,9 +40,9 @@ public class Board {
     @Override
     public String toString(){
         String returnString = "";
-        for(int x=1;x<=8;x++){
-            for(int y=8;y>=1;y--){
-                returnString += boardMap.get(new int[]{x,y}).getSqaurePiece().toString();
+        for(int x=1;x<9;x++){
+            for(int y=1;y<9;y++){
+                returnString += this.boardMap.get(new int[]{x,y}).getSqaurePiece().toString();
             }
             returnString+="/n";
         }
