@@ -14,4 +14,9 @@ public class Square {
     public void setSqaurePiece(ChessPiece sqaurePiece) {
         this.sqaurePiece = sqaurePiece;
     }
+    @Override
+    public String toString(){
+        if(sqaurePiece==null) return "null ";
+        return sqaurePiece.getPieceType().toString() + " ";
+    }
 }

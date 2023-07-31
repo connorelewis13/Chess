@@ -30,4 +30,8 @@ public class Coordinates {
         Coordinates coordinates2 = (Coordinates) o;
         return (this.x == coordinates2.getX()) && (this.y == coordinates2.getY());
     }
+    @Override
+    public int hashCode(){
+        return this.x;
+    }
 }

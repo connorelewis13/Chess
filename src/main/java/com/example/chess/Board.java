@@ -10,7 +10,8 @@ public class Board {
         this.boardMap = new HashMap<>();
         for(int x=1;x<9;x++){
             for(int y=1;y<9;y++){
-                this.boardMap.put(new Coordinates(x,y),new Square(new ChessPiece(PieceColor.WHITE,PieceType.PAWN)));
+                //this.boardMap.put(new Coordinates(x,y),new Square(new ChessPiece(PieceColor.WHITE,PieceType.PAWN)));
+                this.boardMap.put(new Coordinates(x,y),new Square(null));
             }
         }
     }
@@ -42,9 +43,9 @@ public class Board {
         String returnString = "";
         for(int x=1;x<9;x++){
             for(int y=1;y<9;y++){
-                returnString += this.boardMap.get(new int[]{x,y}).getSqaurePiece().toString();
+                returnString += this.boardMap.get(new Coordinates(x,y)).toString();
             }
-            returnString+="/n";
+            returnString+="\n";
         }
         return returnString;
     }
