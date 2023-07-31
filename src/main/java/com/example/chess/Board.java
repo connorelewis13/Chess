@@ -23,8 +23,13 @@ public class Board {
     }
 
     private void setSpecialPieces() {
+
     }
 
     private void setPawns() {
+        for(int i=1;i<=8;i++){
+            putPiece(i,2, new ChessPiece(PieceColor.WHITE,PieceType.PAWN));
+            putPiece(i,7, new ChessPiece(PieceColor.BLACK,PieceType.PAWN));
+        }
     }
 }
