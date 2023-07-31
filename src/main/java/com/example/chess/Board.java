@@ -23,13 +23,17 @@ public class Board {
     }
 
     private void setSpecialPieces() {
-
+        PieceType[] pieceTypes = new PieceType[]{PieceType.ROOK,PieceType.KNIGHT,PieceType.BISHOP,PieceType.QUEEN,PieceType.KING,PieceType.BISHOP,PieceType.KNIGHT,PieceType.ROOK};
+        for(int x=1;x<=8;x++){
+            putPiece(x,1,new ChessPiece(PieceColor.WHITE,pieceTypes[x-1]));
+            putPiece(x,8,new ChessPiece(PieceColor.BLACK,pieceTypes[x-1]));
+        }
     }
 
     private void setPawns() {
-        for(int i=1;i<=8;i++){
-            putPiece(i,2, new ChessPiece(PieceColor.WHITE,PieceType.PAWN));
-            putPiece(i,7, new ChessPiece(PieceColor.BLACK,PieceType.PAWN));
+        for(int x=1;x<=8;x++){
+            putPiece(x,2, new ChessPiece(PieceColor.WHITE,PieceType.PAWN));
+            putPiece(x,7, new ChessPiece(PieceColor.BLACK,PieceType.PAWN));
         }
     }
 }
