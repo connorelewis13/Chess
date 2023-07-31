@@ -41,8 +41,8 @@ public class Board {
     @Override
     public String toString(){
         String returnString = "";
-        for(int x=1;x<9;x++){
-            for(int y=1;y<9;y++){
+        for(int y=8;y>=1;y--){
+            for(int x=1;x<=8;x++){
                 returnString += this.boardMap.get(new Coordinates(x,y)).toString();
             }
             returnString+="\n";
