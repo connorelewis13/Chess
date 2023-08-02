@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ChessApplication extends Application {
+
+    public static Board chessBoard = new Board();
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ChessApplication.class.getResource("hello-view.fxml"));
@@ -18,10 +20,6 @@ public class ChessApplication extends Application {
     }
 
     public static void main(String[] args) {
-        Board testBoard = new Board();
-        System.out.println(testBoard);
-        testBoard.resetBoard();
-        System.out.println(testBoard);
         launch();
     }
 }
