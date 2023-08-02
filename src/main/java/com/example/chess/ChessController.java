@@ -32,7 +32,7 @@ public class ChessController {
     }
 
     private String getPieceOnSquare(int x, int y) {
-        Square square = ChessApplication.chessBoard.getSquareFromCoordinates(x+1,y+1);
+        Square square = ChessApplication.chessBoard.getSquareFromCoordinates(x,y);
         return square.toString();
     }
 }
