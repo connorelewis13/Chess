@@ -6,13 +6,10 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.GridPane?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+<VBox alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.chess.ChessController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
 
     <Label fx:id="Title" text="Chess"/>
     <Button fx:id="StartButton" text="Start" onAction="#StartButtonPressed"/>
-    <GridPane fx:id="BoardGridPane"/>
+    <GridPane alignment="CENTER" fx:id="BoardGridPane"/>
 </VBox>
