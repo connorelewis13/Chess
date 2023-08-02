@@ -49,4 +49,8 @@ public class Board {
         }
         return returnString;
     }
+
+    public Square getSquareFromCoordinates(int x, int y){
+        return boardMap.get(new Coordinates(x,y));
+    }
 }
