@@ -8,9 +8,8 @@ public class Board {
     //1,1 will be bottom left
     public Board(){
         this.boardMap = new HashMap<>();
-        for(int x=1;x<9;x++){
-            for(int y=1;y<9;y++){
-                //this.boardMap.put(new Coordinates(x,y),new Square(new ChessPiece(PieceColor.WHITE,PieceType.PAWN)));
+        for(int x=0;x<8;x++){
+            for(int y=0;y<8;y++){
                 this.boardMap.put(new Coordinates(x,y),new Square(null));
             }
         }
@@ -26,23 +25,23 @@ public class Board {
 
     private void setSpecialPieces() {
         PieceType[] pieceTypes = new PieceType[]{PieceType.ROOK,PieceType.KNIGHT,PieceType.BISHOP,PieceType.QUEEN,PieceType.KING,PieceType.BISHOP,PieceType.KNIGHT,PieceType.ROOK};
-        for(int x=1;x<=8;x++){
-            putPiece(x,1,new ChessPiece(PieceColor.WHITE,pieceTypes[x-1]));
-            putPiece(x,8,new ChessPiece(PieceColor.BLACK,pieceTypes[x-1]));
+        for(int x=0;x<8;x++){
+            putPiece(x,0,new ChessPiece(PieceColor.BLACK,pieceTypes[x]));
+            putPiece(x,7,new ChessPiece(PieceColor.WHITE,pieceTypes[x]));
         }
     }
 
     private void setPawns() {
-        for(int x=1;x<=8;x++){
-            putPiece(x,2, new ChessPiece(PieceColor.WHITE,PieceType.PAWN));
-            putPiece(x,7, new ChessPiece(PieceColor.BLACK,PieceType.PAWN));
+        for(int x=0;x<8;x++){
+            putPiece(x,6, new ChessPiece(PieceColor.WHITE,PieceType.PAWN));
+            putPiece(x,1, new ChessPiece(PieceColor.BLACK,PieceType.PAWN));
         }
     }
     @Override
     public String toString(){
         String returnString = "";
-        for(int y=8;y>=1;y--){
-            for(int x=1;x<=8;x++){
+        for(int y=0;y<=7;y++){
+            for(int x=0;x<=7;x++){
                 returnString += this.boardMap.get(new Coordinates(x,y)).toString();
             }
             returnString+="\n";
