@@ -39,14 +39,15 @@ public class ChessController {
         public void handle(ActionEvent event) {
             if(initialLocation==null){
                 Button buttonPressed = (Button)event.getSource();
-                int y = GridPane.getColumnIndex(buttonPressed);
-                int x = GridPane.getRowIndex(buttonPressed);
+                int x = GridPane.getColumnIndex(buttonPressed);
+                int y = GridPane.getRowIndex(buttonPressed);
                 initialLocation = new Coordinates(x,y);
+                StartButton.setText(""+x+y+" ");
             }
             else{
                 Button buttonPressed = (Button)event.getSource();
-                int finalY = GridPane.getColumnIndex(buttonPressed);
-                int finalX = GridPane.getRowIndex(buttonPressed);
+                int finalX = GridPane.getColumnIndex(buttonPressed);
+                int finalY = GridPane.getRowIndex(buttonPressed);
                 finalLocation = new Coordinates(finalX,finalY);
                 ChessApplication.chessBoard.movePiece(initialLocation,finalLocation);
                 int initialX = initialLocation.getX();
@@ -54,6 +55,7 @@ public class ChessController {
                 putButtonWithPiece(initialY,initialX);
                 putButtonWithPiece(finalY,finalX);
                 initialLocation=null;
+                StartButton.setText(StartButton.getText()+finalX+finalY);
             }
         }
     };
