@@ -52,4 +52,10 @@ public class Board {
     public Square getSquareFromCoordinates(int x, int y){
         return boardMap.get(new Coordinates(x,y));
     }
+
+    public void movePiece(Coordinates initialCor, Coordinates finalCor){
+        ChessPiece piece = boardMap.get(initialCor).getSqaurePiece();
+        boardMap.put(initialCor,new Square(null));
+        boardMap.put(finalCor,new Square(piece));
+    }
 }
