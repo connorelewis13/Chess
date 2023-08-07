@@ -6,10 +6,16 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <VBox alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.chess.ChessController">
 
     <Label fx:id="Title" text="Chess"/>
+    <HBox alignment="CENTER">
+        <Label fx:id="WhitesTurnLabel" text=" White's Turn   " visible="false"/>
+        <Label fx:id="BlacksTurnLabel" text="   Black's Turn " visible="false"/>
+    </HBox>
+    <Label fx:id="ErrorLabel" style="-fx-text-fill: red"/>
     <Button fx:id="StartButton" text="Start" onAction="#StartButtonPressed"/>
     <GridPane alignment="CENTER" fx:id="BoardGridPane"/>
 </VBox>

@@ -25,6 +25,8 @@ public class ChessApplication extends Application {
         System.out.println(testBoard);
         testBoard.movePiece(new Coordinates(0,7),new Coordinates(0,4));
         System.out.println(testBoard);
+        testBoard.resetBoard();
+        System.out.println(testBoard);
         launch();
     }
 }
