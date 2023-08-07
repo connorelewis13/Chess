@@ -37,25 +37,29 @@ public class ChessController {
     EventHandler<ActionEvent> chessButtonPressed = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-            if(initialLocation==null){
-                Button buttonPressed = (Button)event.getSource();
-                int x = GridPane.getColumnIndex(buttonPressed);
-                int y = GridPane.getRowIndex(buttonPressed);
-                initialLocation = new Coordinates(x,y);
-                StartButton.setText(""+x+y+" ");
+            try {
+                if (initialLocation == null) {
+                    Button buttonPressed = (Button) event.getSource();
+                    int x = GridPane.getColumnIndex(buttonPressed);
+                    int y = GridPane.getRowIndex(buttonPressed);
+                    initialLocation = new Coordinates(x, y);
+                    StartButton.setText("" + x + y + " ");
+                } else {
+                    Button buttonPressed = (Button) event.getSource();
+                    int finalX = GridPane.getColumnIndex(buttonPressed);
+                    int finalY = GridPane.getRowIndex(buttonPressed);
+                    finalLocation = new Coordinates(finalX, finalY);
+                    ChessApplication.chessBoard.movePiece(initialLocation, finalLocation);
+                    int initialX = initialLocation.getX();
+                    int initialY = initialLocation.getY();
+                    putButtonWithPiece(initialY, initialX);
+                    putButtonWithPiece(finalY, finalX);
+                    initialLocation = null;
+                    StartButton.setText(StartButton.getText() + finalX + finalY);
+                }
             }
-            else{
-                Button buttonPressed = (Button)event.getSource();
-                int finalX = GridPane.getColumnIndex(buttonPressed);
-                int finalY = GridPane.getRowIndex(buttonPressed);
-                finalLocation = new Coordinates(finalX,finalY);
-                ChessApplication.chessBoard.movePiece(initialLocation,finalLocation);
-                int initialX = initialLocation.getX();
-                int initialY = initialLocation.getY();
-                putButtonWithPiece(initialY,initialX);
-                putButtonWithPiece(finalY,finalX);
+            catch (IllegalArgumentException e){
                 initialLocation=null;
-                StartButton.setText(StartButton.getText()+finalX+finalY);
             }
         }
     };
