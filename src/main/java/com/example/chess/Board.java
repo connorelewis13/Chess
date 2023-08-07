@@ -6,13 +6,19 @@ import java.util.HashMap;
 public class Board {
     private HashMap<Coordinates,Square> boardMap;
     //1,1 will be bottom left
+    private boolean whitesTurn;
+
     public Board(){
+        whitesTurn=true;
         this.boardMap = new HashMap<>();
         for(int x=0;x<8;x++){
             for(int y=0;y<8;y++){
                 this.boardMap.put(new Coordinates(x,y),new Square(null));
             }
         }
+    }
+    public boolean getWhitesTurn(){
+        return this.whitesTurn;
     }
     private void putPiece(int x, int y,ChessPiece chessPiece){
         this.boardMap.put(new Coordinates(x,y),new Square(chessPiece));
@@ -40,6 +46,12 @@ public class Board {
     @Override
     public String toString(){
         String returnString = "";
+        if(whitesTurn){
+            returnString+="White's Turn \n";
+        }
+        else{
+            returnString+="Black's Turn \n";
+        }
         for(int y=0;y<=7;y++){
             for(int x=0;x<=7;x++){
                 returnString += this.boardMap.get(new Coordinates(x,y)).toString();
@@ -55,7 +67,18 @@ public class Board {
 
     public void movePiece(Coordinates initialCor, Coordinates finalCor){
         ChessPiece piece = boardMap.get(initialCor).getSqaurePiece();
-        boardMap.put(initialCor,new Square(null));
-        boardMap.put(finalCor,new Square(piece));
+        if(whitesTurn && piece.getPieceColor()==PieceColor.WHITE){
+            boardMap.put(initialCor,new Square(null));
+            boardMap.put(finalCor,new Square(piece));
+            whitesTurn=false;
+        }
+        else if (!whitesTurn && piece.getPieceColor()==PieceColor.BLACK) {
+            boardMap.put(initialCor,new Square(null));
+            boardMap.put(finalCor,new Square(piece));
+            whitesTurn=true;
+        }
+        else{
+            throw new IllegalArgumentException();
+        }
     }
 }
