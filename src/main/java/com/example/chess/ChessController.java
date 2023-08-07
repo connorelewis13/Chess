@@ -72,7 +72,7 @@ public class ChessController {
                     putButtonWithPiece(initialY, initialX);
                     putButtonWithPiece(finalY, finalX);
                     initialLocation = null;
-                    if(ChessApplication.chessBoard.getWhitesTurn()){
+                    if(!ChessApplication.chessBoard.getWhitesTurn()){
                         WhitesTurnLabel.setBackground(greyBG);
                         BlacksTurnLabel.setBackground(greenBG);
                     }
