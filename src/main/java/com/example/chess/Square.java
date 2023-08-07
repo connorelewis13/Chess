@@ -16,7 +16,7 @@ public class Square {
     }
     @Override
     public String toString(){
-        if(sqaurePiece==null) return "null ";
+        if(sqaurePiece==null) return " ";
         return sqaurePiece + " ";
     }
 }
