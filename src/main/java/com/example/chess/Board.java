@@ -11,12 +11,17 @@ public class Board {
     public Board(){
         whitesTurn=true;
         this.boardMap = new HashMap<>();
+        putNullSquares();
+    }
+
+    private void putNullSquares() {
         for(int x=0;x<8;x++){
             for(int y=0;y<8;y++){
                 this.boardMap.put(new Coordinates(x,y),new Square(null));
             }
         }
     }
+
     public boolean getWhitesTurn(){
         return this.whitesTurn;
     }
@@ -25,6 +30,8 @@ public class Board {
     }
     
     public void resetBoard(){
+        whitesTurn=true;
+        putNullSquares();
         setPawns();
         setSpecialPieces();
     }
