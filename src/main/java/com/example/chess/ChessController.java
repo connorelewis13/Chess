@@ -41,10 +41,11 @@ public class ChessController {
 
     private void putButtonWithPiece(int y, int x) {
         Button button = new Button();
-        button.setMinHeight(80);
-        button.setMaxHeight(80);
-        button.setMinWidth(80);
-        button.setMaxWidth(80);
+        button.setStyle("-fx-font-weight: bold; -fx-font-size: 10;");
+        button.setMinHeight(70);
+        button.setMaxHeight(70);
+        button.setMinWidth(70);
+        button.setMaxWidth(70);
         button.setText(getPieceOnSquare(x, y));
         button.setOnAction(chessButtonPressed);
         BoardGridPane.add(button, x, y);
