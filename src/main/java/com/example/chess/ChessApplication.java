@@ -23,7 +23,8 @@ public class ChessApplication extends Application {
         Board testBoard = new Board();
         testBoard.resetBoard();
         System.out.println(testBoard);
-        testBoard.movePiece(new Coordinates(0,7),new Coordinates(0,4));
+        Move move = new Move(new Coordinates(0,7),new Coordinates(0,4));
+        move.movePiece(testBoard);
         System.out.println(testBoard);
         testBoard.resetBoard();
         System.out.println(testBoard);

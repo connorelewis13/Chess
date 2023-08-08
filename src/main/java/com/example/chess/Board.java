@@ -13,6 +13,10 @@ public class Board {
         putNullSquares();
     }
 
+    public void setWhitesTurn(boolean whitesTurn){
+        this.whitesTurn=whitesTurn;
+    }
+
     private void putNullSquares() {
         for(int x=0;x<8;x++){
             for(int y=0;y<8;y++){
@@ -74,7 +78,7 @@ public class Board {
     public void movePiece(Coordinates initialCor, Coordinates finalCor){
         ChessPiece piece = boardMap.get(initialCor).getSquarePiece();
         if (piece==null) throw new IllegalArgumentException();
-        if(!isValidMove(initialCor,finalCor)) throw new IllegalArgumentException();
+        //if(!isValidMove(initialCor,finalCor)) throw new IllegalArgumentException();
         if(whitesTurn && piece.getPieceColor()==PieceColor.WHITE){
             boardMap.put(initialCor,new Square(null));
             boardMap.put(finalCor,new Square(piece));

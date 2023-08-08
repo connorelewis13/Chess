@@ -9,11 +9,18 @@ public class Move {
         this.finalCoordinates = finalCoordinates;
     }
 
-    public void movePiece(Move move, Board board){
+    public void movePiece(Board board){
         ChessPiece piece = board.getSquareFromCoordinates(initialCoordinates.getX(),initialCoordinates.getY()).getSquarePiece();
         //if (piece==null) throw new IllegalArgumentException();
         if(board.isWhitesTurn() && piece.getPieceColor()==PieceColor.WHITE){
-            //board.putPiece();
+            board.putPiece(initialCoordinates,null);
+            board.putPiece(finalCoordinates,piece);
+            board.setWhitesTurn(false);
+        }
+        else if (!board.isWhitesTurn() && piece.getPieceColor()==PieceColor.BLACK) {
+            board.putPiece(initialCoordinates,null);
+            board.putPiece(finalCoordinates,piece);
+            board.setWhitesTurn(false);
         }
     }
 }
