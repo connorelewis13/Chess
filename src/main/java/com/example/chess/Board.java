@@ -74,6 +74,7 @@ public class Board {
 
     public void movePiece(Coordinates initialCor, Coordinates finalCor){
         ChessPiece piece = boardMap.get(initialCor).getSqaurePiece();
+        if (piece==null) throw new IllegalArgumentException();
         if(!isValidMove(initialCor,finalCor)) throw new IllegalArgumentException();
         if(whitesTurn && piece.getPieceColor()==PieceColor.WHITE){
             boardMap.put(initialCor,new Square(null));
@@ -111,26 +112,38 @@ public class Board {
     }
 
     private boolean isValidKingMove(Coordinates initialCor, Coordinates finalCor) {
+        ChessPiece piece = boardMap.get(initialCor).getSqaurePiece();
         return false;
     }
 
     private boolean isValidBishopMove(Coordinates initialCor, Coordinates finalCor) {
+        ChessPiece piece = boardMap.get(initialCor).getSqaurePiece();
         return false;
     }
 
     private boolean isValidKnightMove(Coordinates initialCor, Coordinates finalCor) {
+        ChessPiece piece = boardMap.get(initialCor).getSqaurePiece();
         return false;
     }
 
     private boolean isValidQueenMove(Coordinates initialCor, Coordinates finalCor) {
+        ChessPiece piece = boardMap.get(initialCor).getSqaurePiece();
         return false;
     }
 
     private boolean isValidRookMove(Coordinates initialCor, Coordinates finalCor) {
+        ChessPiece piece = boardMap.get(initialCor).getSqaurePiece();
         return false;
     }
 
     private boolean isValidPawnMove(Coordinates initialCor, Coordinates finalCor) {
+        ChessPiece piece = boardMap.get(initialCor).getSqaurePiece();
+        if(piece.getPieceColor()==PieceColor.WHITE){
+
+        }
+        else{
+
+        }
         return false;
     }
 
