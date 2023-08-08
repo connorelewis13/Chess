@@ -7,7 +7,7 @@ public class Square {
         this.sqaurePiece = sqaurePiece;
     }
 
-    public ChessPiece getSqaurePiece() {
+    public ChessPiece getSquarePiece() {
         return sqaurePiece;
     }
 
