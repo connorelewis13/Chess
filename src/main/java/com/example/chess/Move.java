@@ -11,6 +11,9 @@ public class Move {
 
     public void movePiece(Move move, Board board){
         ChessPiece piece = board.getSquareFromCoordinates(initialCoordinates.getX(),initialCoordinates.getY()).getSquarePiece();
-        if (piece==null) throw new IllegalArgumentException();
+        //if (piece==null) throw new IllegalArgumentException();
+        if(board.isWhitesTurn() && piece.getPieceColor()==PieceColor.WHITE){
+            //board.putPiece();
+        }
     }
 }

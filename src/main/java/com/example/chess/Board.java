@@ -21,11 +21,11 @@ public class Board {
         }
     }
 
-    public boolean getWhitesTurn(){
+    public boolean isWhitesTurn(){
         return this.whitesTurn;
     }
-    private void putPiece(int x, int y,ChessPiece chessPiece){
-        this.boardMap.put(new Coordinates(x,y),new Square(chessPiece));
+    public void putPiece(Coordinates coordinates,ChessPiece chessPiece){
+        this.boardMap.put(coordinates,new Square(chessPiece));
     }
     
     public void resetBoard(){
@@ -38,15 +38,15 @@ public class Board {
     private void setSpecialPieces() {
         PieceType[] pieceTypes = new PieceType[]{PieceType.ROOK,PieceType.KNIGHT,PieceType.BISHOP,PieceType.QUEEN,PieceType.KING,PieceType.BISHOP,PieceType.KNIGHT,PieceType.ROOK};
         for(int x=0;x<8;x++){
-            putPiece(x,0,new ChessPiece(PieceColor.BLACK,pieceTypes[x]));
-            putPiece(x,7,new ChessPiece(PieceColor.WHITE,pieceTypes[x]));
+            putPiece(new Coordinates(x,0),new ChessPiece(PieceColor.BLACK,pieceTypes[x]));
+            putPiece(new Coordinates(x,7),new ChessPiece(PieceColor.WHITE,pieceTypes[x]));
         }
     }
 
     private void setPawns() {
         for(int x=0;x<8;x++){
-            putPiece(x,6, new ChessPiece(PieceColor.WHITE,PieceType.PAWN));
-            putPiece(x,1, new ChessPiece(PieceColor.BLACK,PieceType.PAWN));
+            putPiece(new Coordinates(x,6), new ChessPiece(PieceColor.WHITE,PieceType.PAWN));
+            putPiece(new Coordinates(x,1), new ChessPiece(PieceColor.BLACK,PieceType.PAWN));
         }
     }
     @Override

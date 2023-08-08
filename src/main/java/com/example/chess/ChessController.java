@@ -72,7 +72,7 @@ public class ChessController {
                     putButtonWithPiece(initialY, initialX);
                     putButtonWithPiece(finalY, finalX);
                     initialLocation = null;
-                    if(!ChessApplication.chessBoard.getWhitesTurn()){
+                    if(!ChessApplication.chessBoard.isWhitesTurn()){
                         WhitesTurnLabel.setBackground(greyBG);
                         BlacksTurnLabel.setBackground(greenBG);
                     }
@@ -84,7 +84,7 @@ public class ChessController {
             }
             catch (IllegalArgumentException e){
                 initialLocation=null;
-                if(ChessApplication.chessBoard.getWhitesTurn()){
+                if(ChessApplication.chessBoard.isWhitesTurn()){
                     ErrorLabel.setText("It is White's Turn");
                 }
                 else{
