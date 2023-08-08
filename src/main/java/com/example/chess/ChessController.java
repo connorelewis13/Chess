@@ -66,7 +66,9 @@ public class ChessController {
                     int finalX = GridPane.getColumnIndex(buttonPressed);
                     int finalY = GridPane.getRowIndex(buttonPressed);
                     finalLocation = new Coordinates(finalX, finalY);
-                    ChessApplication.chessBoard.movePiece(initialLocation, finalLocation);
+                    Move move = new Move(initialLocation,finalLocation);
+                    move.movePiece(ChessApplication.chessBoard);
+                    //ChessApplication.chessBoard.movePiece(initialLocation, finalLocation);
                     int initialX = initialLocation.getX();
                     int initialY = initialLocation.getY();
                     putButtonWithPiece(initialY, initialX);
