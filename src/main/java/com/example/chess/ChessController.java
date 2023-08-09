@@ -86,13 +86,7 @@ public class ChessController {
             }
             catch (IllegalArgumentException e){
                 initialLocation=null;
-                if(ChessApplication.chessBoard.isWhitesTurn()){
-                    ErrorLabel.setText("It is White's Turn");
-                }
-                else{
-                    ErrorLabel.setText("It is Black's Turn");
-                }
-
+                ErrorLabel.setText("Illegal Move");
             }
         }
     };
