@@ -56,7 +56,8 @@ public class Move {
     }
 
     private boolean isValidQueenMove() {
-        return true;
+        if(isValidBishopMove() || isValidRookMove()) return true;
+        return false;
     }
 
     private boolean isValidBishopMove() {
