@@ -28,4 +28,12 @@ public class ChessPiece {
         else if(this.pieceColor==PieceColor.WHITE) return "W." + this.pieceType+" ";
         return "";
     }
+    public boolean isWhite(){
+        if(pieceColor==PieceColor.WHITE) return true;
+        else return false;
+    }
+    public boolean isBlack(){
+        if(pieceColor==PieceColor.BLACK) return true;
+        else return false;
+    }
 }

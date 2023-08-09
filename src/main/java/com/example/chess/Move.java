@@ -72,6 +72,12 @@ public class Move {
     }
 
     private boolean isValidPawnMove() {
+        if(piece1.isWhite()){
+
+        }
+        else if (piece2.isBlack()){
+
+        }
         return true;
     }
 
