@@ -71,8 +71,8 @@ public class Board {
         return returnString;
     }
 
-    public Square getSquareFromCoordinates(int x, int y){
-        return boardMap.get(new Coordinates(x,y));
+    public Square getSquareFromCoordinates(Coordinates coordinates){
+        return boardMap.get(coordinates);
     }
 
     public void movePiece(Coordinates initialCor, Coordinates finalCor){

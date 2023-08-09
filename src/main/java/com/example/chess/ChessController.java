@@ -98,7 +98,7 @@ public class ChessController {
     };
 
     private String getPieceOnSquare(int x, int y) {
-        Square square = ChessApplication.chessBoard.getSquareFromCoordinates(x,y);
+        Square square = ChessApplication.chessBoard.getSquareFromCoordinates(new Coordinates(x,y));
         return square.toString();
     }
 }

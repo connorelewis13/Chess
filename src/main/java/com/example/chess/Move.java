@@ -10,9 +10,9 @@ public class Move {
     }
 
     public void movePiece(Board board){
-        ChessPiece piece = board.getSquareFromCoordinates(initialCoordinates.getX(),initialCoordinates.getY()).getSquarePiece();
+        ChessPiece piece = board.getSquareFromCoordinates(initialCoordinates).getSquarePiece();
         if (piece==null) throw new IllegalArgumentException();
-        if (!isValidMove()) throw new IllegalArgumentException();
+        if (!isValidMove(board)) throw new IllegalArgumentException();
         if(board.isWhitesTurn() && piece.getPieceColor()==PieceColor.WHITE){
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
@@ -23,9 +23,11 @@ public class Move {
             board.putPiece(finalCoordinates,piece);
             board.setWhitesTurn(true);
         }
+        else throw new IllegalArgumentException();
     }
 
-    private boolean isValidMove() {
+    private boolean isValidMove(Board board) {
+        ChessPiece piece = null;
         return true;
     }
 }
