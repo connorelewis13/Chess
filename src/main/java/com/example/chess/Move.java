@@ -21,7 +21,7 @@ public class Move {
         else if (!board.isWhitesTurn() && piece.getPieceColor()==PieceColor.BLACK) {
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
-            board.setWhitesTurn(false);
+            board.setWhitesTurn(true);
         }
     }
 
