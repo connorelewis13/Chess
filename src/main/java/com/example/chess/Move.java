@@ -60,7 +60,8 @@ public class Move {
     }
 
     private boolean isValidBishopMove() {
-        return true;
+        if(isDiagonal()) return true;
+        return false;
     }
 
     private boolean isValidKingMove() {
@@ -114,6 +115,19 @@ public class Move {
     private boolean yIsSame(){
         if(initialCoordinates.getY()== finalCoordinates.getY()){
             return true;
+        }
+        return false;
+    }
+    private boolean isDiagonal(){
+        int initialX = initialCoordinates.getX();
+        int initialY = initialCoordinates.getY();
+        int finalX = finalCoordinates.getX();
+        int finalY = finalCoordinates.getY();
+        for(int i=1;i<=7;i++){
+            if(initialY==finalY+i && initialX==finalX+i) return true;
+            else if(initialY==finalY+i && initialX==finalX-i) return true;
+            else if(initialY==finalY-i && initialX==finalX-i) return true;
+            else if(initialY==finalY-i && initialX==finalX+i) return true;
         }
         return false;
     }
