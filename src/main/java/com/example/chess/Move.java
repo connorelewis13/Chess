@@ -34,6 +34,44 @@ public class Move {
 
     private boolean isValidMove() {
         if(piecesAreSameColor()) return false;
+        switch(piece1.getPieceType()){
+            case PAWN:
+                return isValidPawnMove();
+            case ROOK:
+                return isValidRookMove();
+            case QUEEN:
+                return isValidQueenMove();
+            case KNIGHT:
+                return isValidKnightMove();
+            case BISHOP:
+                return isValidBishopMove();
+            case KING:
+                return isValidKingMove();
+        }
+        return true;
+    }
+
+    private boolean isValidKnightMove() {
+        return true;
+    }
+
+    private boolean isValidQueenMove() {
+        return true;
+    }
+
+    private boolean isValidBishopMove() {
+        return true;
+    }
+
+    private boolean isValidKingMove() {
+        return true;
+    }
+
+    private boolean isValidRookMove() {
+        return true;
+    }
+
+    private boolean isValidPawnMove() {
         return true;
     }
 
