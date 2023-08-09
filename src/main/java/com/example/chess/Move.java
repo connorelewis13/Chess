@@ -33,12 +33,13 @@ public class Move {
     }
 
     private boolean isValidMove() {
-        ChessPiece piece = board.getSquareFromCoordinates(initialCoordinates).getSquarePiece();
+        if(piecesAreSameColor()) return false;
         return true;
     }
 
-    private boolean piecesAreSameColor(Coordinates initialCor, Coordinates finalCor) {
-        if(false) return true;
+    private boolean piecesAreSameColor() {
+        if(piece2==null) return false;
+        else if(piece1.getPieceColor()==piece2.getPieceColor()) return true;
         else return false;
     }
 }
