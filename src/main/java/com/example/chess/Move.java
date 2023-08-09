@@ -73,17 +73,47 @@ public class Move {
 
     private boolean isValidPawnMove() {
         if(piece1.isWhite()){
-
+            if(piece2==null){
+                if(xIsSame() && (initialCoordinates.getY()== finalCoordinates.getY()+1)){
+                    return true;
+                }
+            }
+            else{
+                if((initialCoordinates.getY()== finalCoordinates.getY()+1) && ((initialCoordinates.getX() == finalCoordinates.getX()-1) ||(initialCoordinates.getX() == finalCoordinates.getX()+1) )){
+                    return true;
+                }
+            }
         }
-        else if (piece2.isBlack()){
-
+        else if (piece1.isBlack()){
+            if(piece2==null){
+                if(xIsSame() && (initialCoordinates.getY() == finalCoordinates.getY()-1)){
+                    return true;
+                }
+            }
+            else{
+                if((initialCoordinates.getY()== finalCoordinates.getY()-1) && ((initialCoordinates.getX() == finalCoordinates.getX()-1) ||(initialCoordinates.getX() == finalCoordinates.getX()+1) )){
+                    return true;
+                }
+            }
         }
-        return true;
+        return false;
     }
 
     private boolean piecesAreSameColor() {
         if(piece2==null) return false;
         else if(piece1.getPieceColor()==piece2.getPieceColor()) return true;
         else return false;
+    }
+    private boolean xIsSame(){
+        if(initialCoordinates.getX()== finalCoordinates.getX()){
+            return true;
+        }
+        return false;
+    }
+    private boolean yIsSame(){
+        if(initialCoordinates.getY()== finalCoordinates.getY()){
+            return true;
+        }
+        return false;
     }
 }
