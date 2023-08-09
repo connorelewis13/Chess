@@ -68,7 +68,8 @@ public class Move {
     }
 
     private boolean isValidRookMove() {
-        return true;
+        if(xIsSame() || yIsSame()) return true;
+        return false;
     }
 
     private boolean isValidPawnMove() {
