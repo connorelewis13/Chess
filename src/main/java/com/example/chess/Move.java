@@ -66,7 +66,11 @@ public class Move {
     }
 
     private boolean isValidKingMove() {
-        return true;
+        if(xIsSame() && ((initialCoordinates.getY()== finalCoordinates.getY()+1)||(initialCoordinates.getY()== finalCoordinates.getY()-1))) return true;
+        else if((initialCoordinates.getX()== finalCoordinates.getX()+1) && (yIsSame() || (initialCoordinates.getY()== finalCoordinates.getY()+1)||(initialCoordinates.getY()== finalCoordinates.getY()-1))) return true;
+        else if((initialCoordinates.getX()== finalCoordinates.getX()-1) && (yIsSame() || (initialCoordinates.getY()== finalCoordinates.getY()+1)||(initialCoordinates.getY()== finalCoordinates.getY()-1))) return true;
+
+        return false;
     }
 
     private boolean isValidRookMove() {
