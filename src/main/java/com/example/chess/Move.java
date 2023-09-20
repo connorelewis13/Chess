@@ -101,6 +101,7 @@ public class Move {
                 if(xIsSame() && (initialCoordinates.getY()== finalCoordinates.getY()+1)){
                     return true;
                 }
+                else if(yi==6 && xIsSame() && (initialCoordinates.getY()== finalCoordinates.getY()+2)) return true;
             }
             else{
                 if((initialCoordinates.getY()== finalCoordinates.getY()+1) && ((initialCoordinates.getX() == finalCoordinates.getX()-1) ||(initialCoordinates.getX() == finalCoordinates.getX()+1) )){
@@ -113,6 +114,7 @@ public class Move {
                 if(xIsSame() && (initialCoordinates.getY() == finalCoordinates.getY()-1)){
                     return true;
                 }
+                else if(yi==1 && xIsSame() && (initialCoordinates.getY()== finalCoordinates.getY()-2)) return true;
             }
             else{
                 if((initialCoordinates.getY()== finalCoordinates.getY()-1) && ((initialCoordinates.getX() == finalCoordinates.getX()-1) ||(initialCoordinates.getX() == finalCoordinates.getX()+1) )){
