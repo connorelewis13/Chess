@@ -2,7 +2,11 @@ package com.example.chess;
 
 public class Move {
     private Coordinates initialCoordinates;
+    private int xi;
+    private int yi;
     private Coordinates finalCoordinates;
+    private int xf;
+    private int yf;
     private Board board;
     private ChessPiece piece1;
     private ChessPiece piece2;
@@ -13,6 +17,10 @@ public class Move {
         this.board = board;
         this.piece1 = board.getSquareFromCoordinates(initialCoordinates).getSquarePiece();
         this.piece2 = board.getSquareFromCoordinates(finalCoordinates).getSquarePiece();
+        xi = initialCoordinates.getX();
+        yi = initialCoordinates.getY();
+        xf = finalCoordinates.getX();
+        yf = finalCoordinates.getY();
     }
 
     public void movePiece(){
@@ -48,11 +56,20 @@ public class Move {
             case KING:
                 return isValidKingMove();
         }
-        return true;
+        return false;
     }
 
     private boolean isValidKnightMove() {
-        return true;
+        if((yf==yi+2 && xf==xi+1)
+        ||(yf==yi+1 && xf==xi+2)
+        ||(yf==yi-1 && xf==xi+2)
+        ||(yf==yi-2 && xf==xi+1)
+        ||(yf==yi-2 && xf==xi-1)
+        ||(yf==yi-1 && xf==xi-2)
+        ||(yf==yi+1 && xf==xi-2)
+        ||(yf==yi+2 && xf==xi-1)
+        ) return true;
+        return false;
     }
 
     private boolean isValidQueenMove() {
