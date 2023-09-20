@@ -1,15 +1,15 @@
 package com.example.chess;
 
 public class Move {
-    private Coordinates initialCoordinates;
-    private int xi;
-    private int yi;
-    private Coordinates finalCoordinates;
-    private int xf;
-    private int yf;
-    private Board board;
-    private ChessPiece piece1;
-    private ChessPiece piece2;
+    private final Coordinates initialCoordinates;
+    private final int xi;
+    private final int yi;
+    private final Coordinates finalCoordinates;
+    private final int xf;
+    private final int yf;
+    private final Board board;
+    private final ChessPiece piece1;
+    private final ChessPiece piece2;
 
     public Move(Coordinates initialCoordinates,Coordinates finalCoordinates, Board board){
         this.initialCoordinates = initialCoordinates;
@@ -78,8 +78,40 @@ public class Move {
     }
 
     private boolean isValidBishopMove() {
-        if(isDiagonal()) return true;
+        if(isDiagonal()) {
+            if(noPiecesInBetween()){
+                return true;
+            }
+        }
         return false;
+    }
+
+    private boolean noPiecesInBetween() {
+        int i=0;
+        int j=0;
+        int dx = xf-xi;
+        int dy = yf-yi;
+        int max = Math.max(Math.abs(dx),Math.abs(dy));
+        if(dx>0){
+            i=1;
+        }
+        else if(dx<0){
+            i=-1;
+        }
+        if(dy>0){
+            j=1;
+        }
+        else if(dy<0){
+            j=-1;
+        }
+        for(int n=1;n<max;n++){
+            Coordinates coordinates = new Coordinates((xi+(n*i)),(yi+(n*j)));
+            Square square = board.getSquareFromCoordinates(coordinates);
+            if(square.getSquarePiece()!=null){
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean isValidKingMove() {
@@ -91,7 +123,7 @@ public class Move {
     }
 
     private boolean isValidRookMove() {
-        if(xIsSame() || yIsSame()) return true;
+        if((xIsSame() || yIsSame()) && noPiecesInBetween()) return true;
         return false;
     }
 
@@ -143,15 +175,11 @@ public class Move {
         return false;
     }
     private boolean isDiagonal(){
-        int initialX = initialCoordinates.getX();
-        int initialY = initialCoordinates.getY();
-        int finalX = finalCoordinates.getX();
-        int finalY = finalCoordinates.getY();
         for(int i=1;i<=7;i++){
-            if(initialY==finalY+i && initialX==finalX+i) return true;
-            else if(initialY==finalY+i && initialX==finalX-i) return true;
-            else if(initialY==finalY-i && initialX==finalX-i) return true;
-            else if(initialY==finalY-i && initialX==finalX+i) return true;
+            if(yi==yf+i && xi==xf+i) return true;
+            else if(yi==yf+i && xi==xf-i) return true;
+            else if(yi==yf-i && xi==xf-i) return true;
+            else if(yi==yf-i && xi==xf+i) return true;
         }
         return false;
     }

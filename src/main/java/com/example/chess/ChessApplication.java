@@ -20,14 +20,6 @@ public class ChessApplication extends Application {
     }
 
     public static void main(String[] args) {
-        Board testBoard = new Board();
-        testBoard.resetBoard();
-        System.out.println(testBoard);
-        Move move = new Move(new Coordinates(0,7),new Coordinates(0,4),testBoard);
-        move.movePiece();
-        System.out.println(testBoard);
-        testBoard.resetBoard();
-        System.out.println(testBoard);
         launch();
     }
 }
