@@ -1,6 +1,8 @@
 package com.example.chess;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Board {
     private HashMap<Coordinates,Square> boardMap;
@@ -73,5 +75,30 @@ public class Board {
 
     public Square getSquareFromCoordinates(Coordinates coordinates){
         return boardMap.get(coordinates);
+    }
+
+    public ArrayList<Square> getAllPieceSquares(){
+        ArrayList<Square> pieceSquaresArrayList = new ArrayList<>();
+        for(int x=0;x<8;x++){
+            for(int y=0;y<8;y++){
+                Square square = this.boardMap.get(new Coordinates(x,y));
+                if(square.getSquarePiece()!=null){
+                    pieceSquaresArrayList.add(square);
+                }
+            }
+        }
+        return pieceSquaresArrayList;
+    }
+    public ArrayList<Square> getAllPieceSquares(PieceColor pieceColor){
+        ArrayList<Square> pieceSquaresArrayList = new ArrayList<>();
+        for(int x=0;x<8;x++){
+            for(int y=0;y<8;y++){
+                Square square = this.boardMap.get(new Coordinates(x,y));
+                if(square.getSquarePiece()!=null && square.getSquarePiece().getPieceColor()==pieceColor){
+                    pieceSquaresArrayList.add(square);
+                }
+            }
+        }
+        return pieceSquaresArrayList;
     }
 }
