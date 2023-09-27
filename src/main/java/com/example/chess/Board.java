@@ -1,8 +1,10 @@
 package com.example.chess;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Board {
     private HashMap<Coordinates,Square> boardMap;
@@ -77,28 +79,90 @@ public class Board {
         return boardMap.get(coordinates);
     }
 
-    public ArrayList<Square> getAllPieceSquares(){
-        ArrayList<Square> pieceSquaresArrayList = new ArrayList<>();
+    public ArrayList<Coordinates> getAllPieceSquares(){
+        ArrayList<Coordinates> pieceCoordinates = new ArrayList<>();
         for(int x=0;x<8;x++){
             for(int y=0;y<8;y++){
                 Square square = this.boardMap.get(new Coordinates(x,y));
                 if(square.getSquarePiece()!=null){
-                    pieceSquaresArrayList.add(square);
+                    pieceCoordinates.add(new Coordinates(x,y));
                 }
             }
         }
-        return pieceSquaresArrayList;
+        return pieceCoordinates;
     }
-    public ArrayList<Square> getAllPieceSquares(PieceColor pieceColor){
-        ArrayList<Square> pieceSquaresArrayList = new ArrayList<>();
+
+    public ArrayList<Coordinates> getAllPieceSquares(PieceColor pieceColor){
+        ArrayList<Coordinates> pieceCoordinates = new ArrayList<>();
         for(int x=0;x<8;x++){
             for(int y=0;y<8;y++){
                 Square square = this.boardMap.get(new Coordinates(x,y));
-                if(square.getSquarePiece()!=null && square.getSquarePiece().getPieceColor()==pieceColor){
-                    pieceSquaresArrayList.add(square);
+                if(square.getSquarePiece()!=null){
+                    if(square.getSquarePiece().getPieceColor()==pieceColor){
+                        pieceCoordinates.add(new Coordinates(x,y));
+                    }
                 }
             }
         }
-        return pieceSquaresArrayList;
+        return pieceCoordinates;
+    }
+
+
+    public ArrayList<Coordinates[]> getAllLegalMoves(){
+        PieceColor pieceColor;
+        if(whitesTurn){ pieceColor=PieceColor.WHITE;} else{pieceColor=PieceColor.BLACK;}
+        ArrayList<Coordinates> pieceCoordinates= getAllPieceSquares(pieceColor);
+        for(Coordinates coordinates:pieceCoordinates){
+            ArrayList<Coordinates[]> pieceMoves = getPieceMoves(coordinates);
+        }
+        return null;
+    }
+
+    private ArrayList<Coordinates[]> getPieceMoves(Coordinates coordinates) {
+        ChessPiece chessPiece = boardMap.get(coordinates).getSquarePiece();
+        switch(chessPiece.getPieceType()){
+            case PAWN:
+                return getPawnMoves(coordinates);
+            case ROOK:
+                return getRookMoves(coordinates);
+            case QUEEN:
+                return getQueenMoves(coordinates);
+            case KNIGHT:
+                return getKnightMoves(coordinates);
+            case BISHOP:
+                return getBishopMoves(coordinates);
+            case KING:
+                return isValidKingMove();
+        }
+    }
+
+    private ArrayList<Coordinates[]> getPawnMoves(Coordinates coordinates) {
+        ChessPiece chessPiece = boardMap.get(coordinates).getSquarePiece();
+        ArrayList<Coordinates[]> movesArrayList = new ArrayList<>();
+        if(chessPiece.getPieceColor()==PieceColor.WHITE){
+            if(boardMap.get(new Coordinates(coordinates.getX(),coordinates.getY()-1)).getSquarePiece()==null){
+                movesArrayList.add(new Coordinates[]{coordinates,new Coordinates(coordinates.getX(),coordinates.getY()-1)});
+            }
+            if(boardMap.get(new Coordinates(coordinates.getX(),coordinates.getY()-2)).getSquarePiece()==null){
+                movesArrayList.add(new Coordinates[]{coordinates,new Coordinates(coordinates.getX(),coordinates.getY()-2)});
+            }
+            if(boardMap.get(new Coordinates(coordinates.getX()+1,coordinates.getY()-1)).getSquarePiece()!=null){
+                if(boardMap.get(new Coordinates(coordinates.getX()+1,coordinates.getY()-1)).getSquarePiece().getPieceColor()==PieceColor.BLACK){
+                    movesArrayList.add(new Coordinates[]{coordinates,new Coordinates(coordinates.getX()+1,coordinates.getY()-1)});
+                }
+            }
+            if(boardMap.get(new Coordinates(coordinates.getX()+1,coordinates.getY()+1)).getSquarePiece()!=null){
+                if(boardMap.get(new Coordinates(coordinates.getX()+1,coordinates.getY()+1)).getSquarePiece().getPieceColor()==PieceColor.BLACK){
+                    movesArrayList.add(new Coordinates[]{coordinates,new Coordinates(coordinates.getX()+1,coordinates.getY()+1)});
+                }
+            }
+        }
+        else{
+            possibleCoordinates.add(new Coordinates(coordinates.getX(),coordinates.getY()+1));
+            possibleCoordinates.add(new Coordinates(coordinates.getX(),coordinates.getY()+2));
+            possibleCoordinates.add(new Coordinates(coordinates.getX()+1,coordinates.getY()+1));
+            possibleCoordinates.add(new Coordinates(coordinates.getX()-1,coordinates.getY()+1));
+        }
+        return null;
     }
 }

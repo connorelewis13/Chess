@@ -36,4 +36,9 @@ public class ChessPiece {
         if(pieceColor==PieceColor.BLACK) return true;
         else return false;
     }
+    public boolean isSameColor(ChessPiece chessPiece){
+        if(chessPiece==null) return false;
+        if(this.pieceColor == chessPiece.getPieceColor()) return true;
+        else return false;
+    }
 }

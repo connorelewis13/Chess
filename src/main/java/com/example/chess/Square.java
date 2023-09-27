@@ -1,5 +1,7 @@
 package com.example.chess;
 
+import java.util.ArrayList;
+
 public class Square {
     private ChessPiece sqaurePiece;
 
