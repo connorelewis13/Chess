@@ -27,7 +27,6 @@ public class Move {
 
 
     public void movePiece(){
-        //board.getAllLegalMoves();
         ChessPiece piece = board.getSquareFromCoordinates(initialCoordinates).getSquarePiece();
         if (piece==null) throw new IllegalArgumentException();
         if (!isValidMove()) throw new IllegalArgumentException();
@@ -46,23 +45,28 @@ public class Move {
 
 
     private boolean isValidMove() {
-
-        if(piecesAreSameColor()) return false;
-        switch(piece1.getPieceType()){
-            case PAWN:
-                return isValidPawnMove();
-            case ROOK:
-                return isValidRookMove();
-            case QUEEN:
-                return isValidQueenMove();
-            case KNIGHT:
-                return isValidKnightMove();
-            case BISHOP:
-                return isValidBishopMove();
-            case KING:
-                return isValidKingMove();
+        ArrayList<Coordinates[]> legalMoves = board.getLegalMoves();
+        //board.printMoves(legalMoves);
+        for(Coordinates[] move: legalMoves){
+            if(initialCoordinates==move[0] && finalCoordinates==move[1]) return true;
         }
         return false;
+//        if(piecesAreSameColor()) return false;
+//        switch(piece1.getPieceType()){
+//            case PAWN:
+//                return isValidPawnMove();
+//            case ROOK:
+//                return isValidRookMove();
+//            case QUEEN:
+//                return isValidQueenMove();
+//            case KNIGHT:
+//                return isValidKnightMove();
+//            case BISHOP:
+//                return isValidBishopMove();
+//            case KING:
+//                return isValidKingMove();
+//        }
+//        return false;
     }
 
     private boolean isValidKnightMove() {

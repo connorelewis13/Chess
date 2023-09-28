@@ -55,8 +55,8 @@ public class Board {
         putNullSquares();
         setPawns();
         setSpecialPieces();
-        getAllLegalMoves();
-        printLegalMoves();
+        setLegalMoves();
+        //printLegalMoves();
         blackKingCoordinates= new Coordinates(4,0);
         whiteKingCoordinates= new Coordinates(4,7);
     }
@@ -125,7 +125,7 @@ public class Board {
         return pieceCoordinates;
     }
 
-    public void getAllLegalMoves(){
+    public void setLegalMoves(){
         possibleMoves.clear();
         legalMoves.clear();
         ArrayList<Coordinates[]> notTurnMoves1 = new ArrayList<>();
@@ -134,12 +134,14 @@ public class Board {
         Coordinates kingCoordinates;
         if(whitesTurn){ pieceColor=PieceColor.WHITE; kingCoordinates=whiteKingCoordinates;} else{pieceColor=PieceColor.BLACK; kingCoordinates = blackKingCoordinates;}
         ArrayList<Coordinates> notTurnPieceCoordinates = getAllPieceCoordinates(pieceColor.oppositeColor());
+        //printCoordinatesList(notTurnPieceCoordinates);
         for(Coordinates coordinates:notTurnPieceCoordinates){
             addPieceMoves(coordinates);
         }
         for(Coordinates[] move: possibleMoves){
             notTurnMoves1.add(move);
         }
+        printMoves(notTurnMoves1);
         possibleMoves.clear();
         for(Coordinates[] move:notTurnMoves1){
             if(move[1].equals(kingCoordinates)){
@@ -188,16 +190,22 @@ public class Board {
         switch(chessPiece.getPieceType()){
             case PAWN:
                 addPawnMoves(coordinates);
+                break;
             case ROOK:
                 addRookMoves(coordinates);
+                break;
             case QUEEN:
                 addQueenMoves(coordinates);
+                break;
             case KNIGHT:
                 addKnightMoves(coordinates);
+                break;
             case BISHOP:
                 addBishopMoves(coordinates);
+                break;
             case KING:
-                addValidKingMove(coordinates);
+                addKingMoves(coordinates);
+                break;
         }
     }
 
@@ -237,7 +245,7 @@ public class Board {
         }
     }
 
-    private void addValidKingMove(Coordinates coordinates) {
+    private void addKingMoves(Coordinates coordinates) {
         PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
         Coordinates[] possibleCoordinates = new Coordinates[]{
                 new Coordinates(coordinates.getX(), coordinates.getY()-1),
@@ -369,11 +377,22 @@ public class Board {
         }
         return true;
     }
-    public void printLegalMoves(){
+    public void printMoves(ArrayList<Coordinates[]> moves){
         String toPrint = "";
-        for(Coordinates[] move: legalMoves){
+        for(Coordinates[] move: moves){
             toPrint+= ""+move[0]+", " +move[1] +"\n";
         }
         System.out.println(toPrint);
+    }
+    public void printCoordinatesList(ArrayList<Coordinates> coordinates){
+        String toPrint = "";
+        for(Coordinates coordinates1: coordinates){
+            toPrint+= coordinates1+ "\n";
+        }
+        System.out.println(toPrint);
+    }
+    public ArrayList<Coordinates[]> getLegalMoves(){
+        setLegalMoves();
+        return legalMoves;
     }
 }
