@@ -132,7 +132,41 @@ public class Board {
             case BISHOP:
                 addBishopMoves(coordinates);
             case KING:
-                addValidKingMove();
+                addValidKingMove(coordinates);
+        }
+    }
+
+    private void addKnightMoves(Coordinates coordinates) {
+        PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
+        Coordinates[] possibleCoordinates = new Coordinates[]{
+                new Coordinates(coordinates.getX()-1, coordinates.getY()-2),
+                new Coordinates(coordinates.getX()+1, coordinates.getY()-2),
+                new Coordinates(coordinates.getX()+2, coordinates.getY()-1),
+                new Coordinates(coordinates.getX()-2, coordinates.getY()-1),
+                new Coordinates(coordinates.getX()+1, coordinates.getY()+2),
+                new Coordinates(coordinates.getX()-1, coordinates.getY()+2),
+                new Coordinates(coordinates.getX()-2, coordinates.getY()+1),
+                new Coordinates(coordinates.getX()+2, coordinates.getY()+1),
+        };
+        for(Coordinates possibleCoordinate:possibleCoordinates){
+            if(possibleCoordinate.isInBounds() && !hasPiece(coordinates,pieceColor)) addMove(coordinates,possibleCoordinate);
+        }
+    }
+
+    private void addValidKingMove(Coordinates coordinates) {
+        PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
+        Coordinates[] possibleCoordinates = new Coordinates[]{
+                new Coordinates(coordinates.getX(), coordinates.getY()-1),
+                new Coordinates(coordinates.getX(), coordinates.getY()+1),
+                new Coordinates(coordinates.getX()-1, coordinates.getY()-1),
+                new Coordinates(coordinates.getX()-1, coordinates.getY()+1),
+                new Coordinates(coordinates.getX()+1, coordinates.getY()-1),
+                new Coordinates(coordinates.getX()+1, coordinates.getY()+1),
+                new Coordinates(coordinates.getX()-1, coordinates.getY()),
+                new Coordinates(coordinates.getX()+1, coordinates.getY()),
+        };
+        for(Coordinates possibleCoordinate:possibleCoordinates){
+            if(possibleCoordinate.isInBounds() && !hasPiece(coordinates,pieceColor)) addMove(coordinates,possibleCoordinate);
         }
     }
 
