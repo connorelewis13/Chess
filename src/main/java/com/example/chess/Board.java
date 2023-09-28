@@ -171,6 +171,9 @@ public class Board {
         ChessPiece piece2 = getSquareFromCoordinates(move[1]).getSquarePiece();
         putPiece(move[1],piece);
         putPiece(move[0],null);
+        if(piece.getPieceType()==PieceType.KING){
+            setKingCoordinates(pieceColor,move[1]);
+        }
         ArrayList<Coordinates> notTurnPieceCoordinates = getAllPieceCoordinates(pieceColor.oppositeColor());
         for(Coordinates coordinates:notTurnPieceCoordinates){
             addPieceMoves(coordinates);
@@ -180,6 +183,9 @@ public class Board {
         }
         putPiece(move[1],piece2);
         putPiece(move[0],piece);
+        if(piece.getPieceType()==PieceType.KING){
+            setKingCoordinates(pieceColor,move[0]);
+        }
         possibleMoves.clear();
         return returnBool;
     }

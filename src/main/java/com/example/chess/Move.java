@@ -35,12 +35,14 @@ public class Move {
             board.putPiece(finalCoordinates,piece);
             if(piece.getPieceType()==PieceType.KING) board.setKingCoordinates(PieceColor.WHITE,finalCoordinates);
             board.setWhitesTurn(false);
+            board.printMoves(board.getLegalMoves());
         }
         else if (!board.isWhitesTurn() && piece.getPieceColor()==PieceColor.BLACK) {
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
             if(piece.getPieceType()==PieceType.KING) board.setKingCoordinates(PieceColor.BLACK,finalCoordinates);
             board.setWhitesTurn(true);
+            board.printMoves(board.getLegalMoves());
         }
         else throw new IllegalArgumentException();
     }
