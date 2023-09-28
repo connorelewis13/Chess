@@ -136,6 +136,11 @@ public class Board {
         }
     }
 
+    private void addQueenMoves(Coordinates coordinates) {
+        addBishopMoves(coordinates);
+        addRookMoves(coordinates);
+    }
+
     private void addBishopMoves(Coordinates coordinates) {
         PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
         ArrayList<Coordinates> possibleCoordinates = new ArrayList<>();
