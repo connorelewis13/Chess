@@ -68,7 +68,6 @@ public class ChessController {
                     finalLocation = new Coordinates(finalX, finalY);
                     Move move = new Move(initialLocation,finalLocation, ChessApplication.chessBoard);
                     move.movePiece();
-                    //ChessApplication.chessBoard.movePiece(initialLocation, finalLocation);
                     int initialX = initialLocation.getX();
                     int initialY = initialLocation.getY();
                     putButtonWithPiece(initialY, initialX);
