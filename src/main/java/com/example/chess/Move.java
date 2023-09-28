@@ -34,11 +34,13 @@ public class Move {
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
             board.setWhitesTurn(false);
+            board.getAllLegalMoves();
         }
         else if (!board.isWhitesTurn() && piece.getPieceColor()==PieceColor.BLACK) {
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
             board.setWhitesTurn(true);
+            board.getAllLegalMoves();
         }
         else throw new IllegalArgumentException();
     }

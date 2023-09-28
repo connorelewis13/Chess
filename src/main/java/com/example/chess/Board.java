@@ -7,13 +7,25 @@ public class Board {
     private HashMap<Coordinates,Square> boardMap;
     //1,1 will be bottom left
     private boolean whitesTurn;
-    private ArrayList<Coordinates[]> possibleMoves;
+    private ArrayList<Coordinates[]> turnPossibleMoves;
+    private ArrayList<Coordinates[]> notTurnPossibleMoves;
+
+    private boolean whiteKingChecked;
+    private boolean blackKingChecked;
+
+    private Coordinates whiteKingCoordinates;
+    private Coordinates blackKingCoordinates;
 
     public Board(){
         whitesTurn=true;
         this.boardMap = new HashMap<>();
         putNullSquares();
-        possibleMoves = new ArrayList<>();
+        turnPossibleMoves = new ArrayList<>();
+        notTurnPossibleMoves = new ArrayList<>();
+        blackKingCoordinates=null;
+        whiteKingCoordinates=null;
+        whiteKingChecked=false;
+        blackKingChecked=false;
     }
 
 
@@ -41,6 +53,9 @@ public class Board {
         putNullSquares();
         setPawns();
         setSpecialPieces();
+        getAllLegalMoves();
+        blackKingCoordinates= new Coordinates(4,0);
+        whiteKingCoordinates= new Coordinates(4,7);
     }
 
     private void setSpecialPieces() {
@@ -79,7 +94,7 @@ public class Board {
         return boardMap.get(coordinates);
     }
 
-    public ArrayList<Coordinates> getAllPieceSquares(){
+    public ArrayList<Coordinates> getAllPieceCoordinates(){
         ArrayList<Coordinates> pieceCoordinates = new ArrayList<>();
         for(int x=0;x<8;x++){
             for(int y=0;y<8;y++){
@@ -92,7 +107,7 @@ public class Board {
         return pieceCoordinates;
     }
 
-    public ArrayList<Coordinates> getAllPieceSquares(PieceColor pieceColor){
+    public ArrayList<Coordinates> getAllPieceCoordinates(PieceColor pieceColor){
         ArrayList<Coordinates> pieceCoordinates = new ArrayList<>();
         for(int x=0;x<8;x++){
             for(int y=0;y<8;y++){
@@ -109,13 +124,29 @@ public class Board {
 
 
     public void getAllLegalMoves(){
-        possibleMoves.clear();
+        turnPossibleMoves.clear();
+        notTurnPossibleMoves.clear();
         PieceColor pieceColor;
-        if(whitesTurn){ pieceColor=PieceColor.WHITE;} else{pieceColor=PieceColor.BLACK;}
-        ArrayList<Coordinates> pieceCoordinates= getAllPieceSquares(pieceColor);
-        for(Coordinates coordinates:pieceCoordinates){
+        Coordinates kingCoordinates;
+        if(whitesTurn){ pieceColor=PieceColor.WHITE; kingCoordinates=whiteKingCoordinates;} else{pieceColor=PieceColor.BLACK; kingCoordinates = blackKingCoordinates;}
+        ArrayList<Coordinates> notTurnPieceCoordinates = getAllPieceCoordinates(pieceColor.oppositeColor());
+        for(Coordinates coordinates:notTurnPieceCoordinates){
             addPieceMoves(coordinates);
         }
+        for(Coordinates[] move:turnPossibleMoves){
+            notTurnPossibleMoves.add(move);
+        }
+        turnPossibleMoves.clear();
+        for(Coordinates[] move:notTurnPossibleMoves){
+            if(move[1].equals(kingCoordinates)){
+                setKingChecked(pieceColor,true);
+            }
+        }
+        ArrayList<Coordinates> turnPieceCoordinates= getAllPieceCoordinates(pieceColor);
+        for(Coordinates coordinates:turnPieceCoordinates){
+            addPieceMoves(coordinates);
+        }
+
     }
 
     private void addPieceMoves(Coordinates coordinates) {
@@ -238,7 +269,7 @@ public class Board {
     }
 
     private void addMove(Coordinates coordinates, Coordinates possibleCoordinates) {
-        possibleMoves.add(new Coordinates[]{coordinates, possibleCoordinates});
+        turnPossibleMoves.add(new Coordinates[]{coordinates, possibleCoordinates});
     }
 
     private boolean hasPiece(Coordinates coordinates){
@@ -250,5 +281,14 @@ public class Board {
             return piece.getPieceColor()==pieceColor;
         }
         return false;
+    }
+
+    public void setKingChecked(PieceColor pieceColor, Boolean boo){
+        if (pieceColor==PieceColor.WHITE){
+            whiteKingChecked=boo;
+        }
+        else if(pieceColor==PieceColor.BLACK){
+            blackKingChecked=boo;
+        }
     }
 }
