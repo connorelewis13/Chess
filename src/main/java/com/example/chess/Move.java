@@ -33,11 +33,13 @@ public class Move {
         if(board.isWhitesTurn() && piece.getPieceColor()==PieceColor.WHITE){
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
+            if(piece.getPieceType()==PieceType.KING) board.setKingCoordinates(PieceColor.WHITE,finalCoordinates);
             board.setWhitesTurn(false);
         }
         else if (!board.isWhitesTurn() && piece.getPieceColor()==PieceColor.BLACK) {
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
+            if(piece.getPieceType()==PieceType.KING) board.setKingCoordinates(PieceColor.BLACK,finalCoordinates);
             board.setWhitesTurn(true);
         }
         else throw new IllegalArgumentException();

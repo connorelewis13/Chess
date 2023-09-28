@@ -42,4 +42,9 @@ public class Coordinates {
     public String toString() {
         return "("+x+","+y+")";
     }
+
+    public void setCoordinates(Coordinates coordinates){
+        this.x=coordinates.getX();
+        this.y=coordinates.getY();
+    }
 }

@@ -394,4 +394,12 @@ public class Board {
         setLegalMoves();
         return legalMoves;
     }
+    public void setKingCoordinates(PieceColor pieceColor, Coordinates coordinates){
+        if(pieceColor==PieceColor.WHITE){
+            whiteKingCoordinates.setCoordinates(coordinates);
+        }
+        else if(pieceColor==PieceColor.BLACK){
+            blackKingCoordinates.setCoordinates(coordinates);
+        }
+    }
 }
