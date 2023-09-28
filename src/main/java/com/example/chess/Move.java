@@ -45,6 +45,7 @@ public class Move {
         else throw new IllegalArgumentException();
     }
 
+
     private boolean isValidMove() {
         if(piecesAreSameColor()) return false;
         switch(piece1.getPieceType()){

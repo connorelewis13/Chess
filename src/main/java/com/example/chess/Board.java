@@ -212,7 +212,7 @@ public class Board {
             possibleCoordinates.add(new Coordinates(coordinates.getX()-n, coordinates.getY()+n));
         }
         for(Coordinates possibleCoordinate: possibleCoordinates){
-            if(possibleCoordinate.isInBounds() && !hasPiece(possibleCoordinate,pieceColor)) addMove(coordinates,possibleCoordinate);
+            if(possibleCoordinate.isInBounds() && !hasPiece(possibleCoordinate,pieceColor) && noPiecesInBetween(coordinates,possibleCoordinate)) addMove(coordinates,possibleCoordinate);
         }
     }
 
@@ -254,11 +254,11 @@ public class Board {
         PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
         for(int i=0; i<8;i++){
             Coordinates possibleCoordinates = new Coordinates(coordinates.getX(),i);
-            if(!possibleCoordinates.equals(coordinates) && !hasPiece(possibleCoordinates,pieceColor)){
+            if(!possibleCoordinates.equals(coordinates) && !hasPiece(possibleCoordinates,pieceColor) && noPiecesInBetween(coordinates,possibleCoordinates)){
                 addMove(coordinates,possibleCoordinates);
             }
             possibleCoordinates = new Coordinates(i,coordinates.getY());
-            if(!possibleCoordinates.equals(coordinates) && !hasPiece(possibleCoordinates,pieceColor)){
+            if(!possibleCoordinates.equals(coordinates) && !hasPiece(possibleCoordinates,pieceColor) && noPiecesInBetween(coordinates,possibleCoordinates)){
                 addMove(coordinates,possibleCoordinates);
             }
         }
@@ -280,7 +280,7 @@ public class Board {
         }
         possibleCoordinates = new Coordinates(coordinates.getX(),coordinates.getY()+2*yDirection);
         if(possibleCoordinates.isInBounds()){
-            if(!hasPiece(possibleCoordinates)){
+            if(!hasPiece(possibleCoordinates) && noPiecesInBetween(coordinates,possibleCoordinates)){
                 addMove(coordinates, possibleCoordinates);
             }
         }
@@ -337,5 +337,32 @@ public class Board {
         else{
             gameStatus=GameStatus.GAME_ON;
         }
+    }
+    private boolean noPiecesInBetween(Coordinates c1, Coordinates c2){
+        int i=0;
+        int j=0;
+        int dx = c2.getX()-c1.getX();
+        int dy = c2.getY()-c1.getY();
+        int max = Math.max(Math.abs(dx),Math.abs(dy));
+        if(dx>0){
+            i=1;
+        }
+        else if(dx<0){
+            i=-1;
+        }
+        if(dy>0){
+            j=1;
+        }
+        else if(dy<0){
+            j=-1;
+        }
+        for(int n=1;n<max;n++){
+            Coordinates coordinates = new Coordinates((c1.getX()+(n*i)),(c1.getY()+(n*j)));
+            Square square = getSquareFromCoordinates(coordinates);
+            if(square.getSquarePiece()!=null){
+                return false;
+            }
+        }
+        return true;
     }
 }
