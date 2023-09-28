@@ -136,6 +136,20 @@ public class Board {
         }
     }
 
+    private void addBishopMoves(Coordinates coordinates) {
+        PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
+        ArrayList<Coordinates> possibleCoordinates = new ArrayList<>();
+        for(int n=1;n<8;n++){
+            possibleCoordinates.add(new Coordinates(coordinates.getX()+n, coordinates.getY()+n));
+            possibleCoordinates.add(new Coordinates(coordinates.getX()-n, coordinates.getY()-n));
+            possibleCoordinates.add(new Coordinates(coordinates.getX()+n, coordinates.getY()-n));
+            possibleCoordinates.add(new Coordinates(coordinates.getX()-n, coordinates.getY()+n));
+        }
+        for(Coordinates possibleCoordinate: possibleCoordinates){
+            if(possibleCoordinate.isInBounds() && !hasPiece(possibleCoordinate,pieceColor)) addMove(coordinates,possibleCoordinate);
+        }
+    }
+
     private void addKnightMoves(Coordinates coordinates) {
         PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
         Coordinates[] possibleCoordinates = new Coordinates[]{
@@ -149,7 +163,7 @@ public class Board {
                 new Coordinates(coordinates.getX()+2, coordinates.getY()+1),
         };
         for(Coordinates possibleCoordinate:possibleCoordinates){
-            if(possibleCoordinate.isInBounds() && !hasPiece(coordinates,pieceColor)) addMove(coordinates,possibleCoordinate);
+            if(possibleCoordinate.isInBounds() && !hasPiece(possibleCoordinate,pieceColor)) addMove(coordinates,possibleCoordinate);
         }
     }
 
@@ -166,18 +180,19 @@ public class Board {
                 new Coordinates(coordinates.getX()+1, coordinates.getY()),
         };
         for(Coordinates possibleCoordinate:possibleCoordinates){
-            if(possibleCoordinate.isInBounds() && !hasPiece(coordinates,pieceColor)) addMove(coordinates,possibleCoordinate);
+            if(possibleCoordinate.isInBounds() && !hasPiece(possibleCoordinate,pieceColor)) addMove(coordinates,possibleCoordinate);
         }
     }
 
     private void addRookMoves(Coordinates coordinates) {
+        PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
         for(int i=0; i<8;i++){
             Coordinates possibleCoordinates = new Coordinates(coordinates.getX(),i);
-            if(!possibleCoordinates.equals(coordinates)){
+            if(!possibleCoordinates.equals(coordinates) && !hasPiece(possibleCoordinates,pieceColor)){
                 addMove(coordinates,possibleCoordinates);
             }
             possibleCoordinates = new Coordinates(i,coordinates.getY());
-            if(!possibleCoordinates.equals(coordinates)){
+            if(!possibleCoordinates.equals(coordinates) && !hasPiece(possibleCoordinates,pieceColor)){
                 addMove(coordinates,possibleCoordinates);
             }
         }
