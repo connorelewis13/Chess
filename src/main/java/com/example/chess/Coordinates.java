@@ -34,4 +34,7 @@ public class Coordinates {
     public int hashCode(){
         return this.x;
     }
+    public boolean isInBounds(){
+        return (this.x<8 && this.x>=0) && (this.y<8 && this.y>=0);
+    }
 }
