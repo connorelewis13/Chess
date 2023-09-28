@@ -344,7 +344,7 @@ public class Board {
         else return null;
     }
 
-    private void setCheckMated(PieceColor pieceColor){
+    public void setCheckMated(PieceColor pieceColor){
         if(pieceColor==PieceColor.WHITE){
             gameStatus=GameStatus.WHITE_CHECKMATED;
         }
@@ -407,5 +407,9 @@ public class Board {
         else if(pieceColor==PieceColor.BLACK){
             blackKingCoordinates.setCoordinates(coordinates);
         }
+    }
+
+    public GameStatus getGameStatus(){
+        return this.gameStatus;
     }
 }

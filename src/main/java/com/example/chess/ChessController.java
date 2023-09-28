@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 public class ChessController {
@@ -17,6 +14,8 @@ public class ChessController {
     @FXML private GridPane BoardGridPane;
     @FXML private Button StartButton;
     @FXML private Label ErrorLabel;
+    @FXML private Label WinnerLabel;
+    @FXML private HBox turnHbox;
     private Coordinates initialLocation;
     private Coordinates finalLocation;
     private Background greyBG = new Background(new BackgroundFill(Color.GREY, CornerRadii.EMPTY, Insets.EMPTY));
@@ -26,6 +25,15 @@ public class ChessController {
 
 
     public void StartButtonPressed(ActionEvent actionEvent) {
+//        BoardGridPane.setVisible(true);
+//        BoardGridPane.setManaged(true);
+        ChessApplication.chessBoard.setCheckMated(null);
+        turnHbox.setManaged(true);
+        turnHbox.setVisible(true);
+        ErrorLabel.setManaged(true);
+        ErrorLabel.setVisible(true);
+        WinnerLabel.setVisible(false);
+        WinnerLabel.setManaged(false);
         ChessApplication.chessBoard.resetBoard();
         WhitesTurnLabel.setBackground(greenBG);
         BlacksTurnLabel.setBackground(greyBG);
@@ -81,6 +89,28 @@ public class ChessController {
                         WhitesTurnLabel.setBackground(greenBG);
                         BlacksTurnLabel.setBackground(greyBG);
                     }
+                }
+                if(ChessApplication.chessBoard.getGameStatus()==GameStatus.WHITE_CHECKMATED){
+//                    BoardGridPane.setVisible(false);
+//                    BoardGridPane.setManaged(false);
+                    WinnerLabel.setVisible(true);
+                    WinnerLabel.setManaged(true);
+                    turnHbox.setManaged(false);
+                    turnHbox.setVisible(false);
+                    ErrorLabel.setManaged(false);
+                    ErrorLabel.setVisible(false);
+                    WinnerLabel.setText("Black Won!");
+                }
+                else if(ChessApplication.chessBoard.getGameStatus()==GameStatus.BLACK_CHECKMATED){
+//                    BoardGridPane.setVisible(false);
+//                    BoardGridPane.setManaged(false);
+                    WinnerLabel.setVisible(true);
+                    WinnerLabel.setManaged(true);
+                    turnHbox.setManaged(false);
+                    turnHbox.setVisible(false);
+                    ErrorLabel.setManaged(false);
+                    ErrorLabel.setVisible(false);
+                    WinnerLabel.setText("White Won!");
                 }
             }
             catch (IllegalArgumentException e){

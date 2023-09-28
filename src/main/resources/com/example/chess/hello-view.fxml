@@ -11,11 +11,12 @@
       fx:controller="com.example.chess.ChessController">
 
     <Label fx:id="Title" text="Chess"/>
-    <HBox alignment="CENTER">
+    <HBox alignment="CENTER" fx:id="turnHbox">
         <Label fx:id="WhitesTurnLabel" text=" White's Turn   " visible="false"/>
         <Label fx:id="BlacksTurnLabel" text="   Black's Turn " visible="false"/>
     </HBox>
     <Label fx:id="ErrorLabel" style="-fx-text-fill: red"/>
     <Button fx:id="StartButton" text="Start" onAction="#StartButtonPressed"/>
     <GridPane alignment="CENTER" fx:id="BoardGridPane"/>
+    <Label managed="false" visible="false" fx:id="WinnerLabel" style="-fx-font-weight: bold; -fx-font-size: 25;"></Label>
 </VBox>
