@@ -27,6 +27,7 @@ public class Move {
 
 
     public void movePiece(){
+        //board.getAllLegalMoves();
         ChessPiece piece = board.getSquareFromCoordinates(initialCoordinates).getSquarePiece();
         if (piece==null) throw new IllegalArgumentException();
         if (!isValidMove()) throw new IllegalArgumentException();
@@ -34,19 +35,18 @@ public class Move {
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
             board.setWhitesTurn(false);
-            board.getAllLegalMoves();
         }
         else if (!board.isWhitesTurn() && piece.getPieceColor()==PieceColor.BLACK) {
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
             board.setWhitesTurn(true);
-            board.getAllLegalMoves();
         }
         else throw new IllegalArgumentException();
     }
 
 
     private boolean isValidMove() {
+
         if(piecesAreSameColor()) return false;
         switch(piece1.getPieceType()){
             case PAWN:

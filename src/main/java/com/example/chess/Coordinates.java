@@ -37,4 +37,9 @@ public class Coordinates {
     public boolean isInBounds(){
         return (this.x<8 && this.x>=0) && (this.y<8 && this.y>=0);
     }
+
+    @Override
+    public String toString() {
+        return "("+x+","+y+")";
+    }
 }
