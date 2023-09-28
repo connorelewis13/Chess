@@ -136,6 +136,19 @@ public class Board {
         }
     }
 
+    private void addRookMoves(Coordinates coordinates) {
+        for(int i=0; i<8;i++){
+            Coordinates possibleCoordinates = new Coordinates(coordinates.getX(),i);
+            if(!possibleCoordinates.equals(coordinates)){
+                addMove(coordinates,possibleCoordinates);
+            }
+            possibleCoordinates = new Coordinates(i,coordinates.getY());
+            if(!possibleCoordinates.equals(coordinates)){
+                addMove(coordinates,possibleCoordinates);
+            }
+        }
+    }
+
     private void addPawnMoves(Coordinates coordinates) {
         ChessPiece chessPiece = boardMap.get(coordinates).getSquarePiece();
         int yDirection = 1;
