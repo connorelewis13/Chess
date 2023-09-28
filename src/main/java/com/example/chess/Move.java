@@ -46,9 +46,8 @@ public class Move {
 
     private boolean isValidMove() {
         ArrayList<Coordinates[]> legalMoves = board.getLegalMoves();
-        //board.printMoves(legalMoves);
         for(Coordinates[] move: legalMoves){
-            if(initialCoordinates==move[0] && finalCoordinates==move[1]) return true;
+            if(initialCoordinates.equals(move[0]) && finalCoordinates.equals(move[1])) return true;
         }
         return false;
 //        if(piecesAreSameColor()) return false;

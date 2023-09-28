@@ -141,7 +141,6 @@ public class Board {
         for(Coordinates[] move: possibleMoves){
             notTurnMoves1.add(move);
         }
-        printMoves(notTurnMoves1);
         possibleMoves.clear();
         for(Coordinates[] move:notTurnMoves1){
             if(move[1].equals(kingCoordinates)){
