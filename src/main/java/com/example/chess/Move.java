@@ -51,6 +51,7 @@ public class Move {
             }
             board.setWhitesTurn(false);
             if(board.getLegalMoves().size()==0 && board.getKingChecked(PieceColor.BLACK)) board.setCheckMated(PieceColor.BLACK);
+            else if(board.getLegalMoves().size()==0) board.setStaleMate();
         }
         else if (!board.isWhitesTurn() && piece.getPieceColor()==PieceColor.BLACK) {
             board.putPiece(initialCoordinates,null);
@@ -72,6 +73,7 @@ public class Move {
             }
             board.setWhitesTurn(true);
             if(board.getLegalMoves().size()==0 && board.getKingChecked(PieceColor.WHITE)) board.setCheckMated(PieceColor.WHITE);
+            else if(board.getLegalMoves().size()==0) board.setStaleMate();
         }
         else throw new IllegalArgumentException();
     }

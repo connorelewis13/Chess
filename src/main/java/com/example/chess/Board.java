@@ -184,7 +184,7 @@ public class Board {
 //        }
     }
 
-    private void setStaleMate() {
+    public void setStaleMate() {
         gameStatus=GameStatus.STALEMATE;
     }
 
