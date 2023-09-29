@@ -40,10 +40,17 @@ public class Move {
                 else if(Math.abs(yi-yf)==1 && Math.abs(xi-xf)==1 && otherPiece==null){
                     board.putPiece(board.getTwoSpacePawn(),null);
                 }
+                else if(yf==0){
+                    board.setPassedPawn(finalCoordinates);
+                    System.out.println("passed pawn: " +board.getPassedPawn());
+                }
             }
-            else board.setTwoSpacePawn(null);
+            else{
+                board.setTwoSpacePawn(null);
+                board.setPassedPawn(null);
+            }
             board.setWhitesTurn(false);
-            board.printMoves(board.getLegalMoves());
+            //board.printMoves(board.getLegalMoves());
         }
         else if (!board.isWhitesTurn() && piece.getPieceColor()==PieceColor.BLACK) {
             board.putPiece(initialCoordinates,null);
@@ -54,10 +61,17 @@ public class Move {
                 else if(Math.abs(yi-yf)==1 && Math.abs(xi-xf)==1 && otherPiece==null){
                     board.putPiece(board.getTwoSpacePawn(),null);
                 }
+                else if(yf==7){
+                    board.setPassedPawn(finalCoordinates);
+                    System.out.println("passed pawn: " +board.getPassedPawn());
+                }
             }
-            else board.setTwoSpacePawn(null);
+            else{
+                board.setTwoSpacePawn(null);
+                board.setPassedPawn(null);
+            }
             board.setWhitesTurn(true);
-            board.printMoves(board.getLegalMoves());
+            //board.printMoves(board.getLegalMoves());
         }
         else throw new IllegalArgumentException();
     }

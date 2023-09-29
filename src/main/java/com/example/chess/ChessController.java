@@ -10,7 +10,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 public class ChessController {
-    @FXML private Label welcomeText;
+    @FXML private HBox changePawnHbox;
     @FXML private GridPane BoardGridPane;
     @FXML private Button StartButton;
     @FXML private Label ErrorLabel;
@@ -22,6 +22,10 @@ public class ChessController {
     private Background greenBG = new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY));
     @FXML private Label WhitesTurnLabel;
     @FXML private Label BlacksTurnLabel;
+    @FXML private Button queenButton;
+    @FXML private Button rookButton;
+    @FXML private Button bishopButton;
+    @FXML private Button knightButton;
 
 
     public void StartButtonPressed(ActionEvent actionEvent) {
@@ -40,6 +44,8 @@ public class ChessController {
         WhitesTurnLabel.setVisible(true);
         BlacksTurnLabel.setVisible(true);
         StartButton.setText("Restart");
+        changePawnHbox.setManaged(false);
+        changePawnHbox.setVisible(false);
         for(int y = 0;y<8;y++){
             for(int x=0;x<8;x++){
                 putButtonWithPiece(y,x);
@@ -64,36 +70,41 @@ public class ChessController {
         public void handle(ActionEvent event) {
             try {
                 ErrorLabel.setText("");
-                if (initialLocation == null) {
-                    Button buttonPressed = (Button) event.getSource();
-                    int x = GridPane.getColumnIndex(buttonPressed);
-                    int y = GridPane.getRowIndex(buttonPressed);
-                    initialLocation = new Coordinates(x, y);
-                } else {
-                    Button buttonPressed = (Button) event.getSource();
-                    int finalX = GridPane.getColumnIndex(buttonPressed);
-                    int finalY = GridPane.getRowIndex(buttonPressed);
-                    finalLocation = new Coordinates(finalX, finalY);
-                    Move move = new Move(initialLocation,finalLocation, ChessApplication.chessBoard);
-                    move.movePiece();
-                    int initialX = initialLocation.getX();
-                    int initialY = initialLocation.getY();
-                    putButtonWithPiece(initialY, initialX);
-                    putButtonWithPiece(finalY, finalX);
-                    if(Math.abs(finalY-initialY)==1 && Math.abs(finalX-initialX)==1){
-                        putButtonWithPiece(initialY,finalX);
-                        System.out.println("EN PASSANT");
-                        //ErrorLabel.setText(ChessApplication.chessBoard.getSquareFromCoordinates(new Coordinates(finalX,initialY)).getSquarePiece()+"!");
+
+                if(ChessApplication.chessBoard.getPassedPawn()==(null)){
+                    if (initialLocation == null) {
+                        Button buttonPressed = (Button) event.getSource();
+                        int x = GridPane.getColumnIndex(buttonPressed);
+                        int y = GridPane.getRowIndex(buttonPressed);
+                        initialLocation = new Coordinates(x, y);
+                    } else {
+                        Button buttonPressed = (Button) event.getSource();
+                        int finalX = GridPane.getColumnIndex(buttonPressed);
+                        int finalY = GridPane.getRowIndex(buttonPressed);
+                        finalLocation = new Coordinates(finalX, finalY);
+                        Move move = new Move(initialLocation,finalLocation, ChessApplication.chessBoard);
+                        move.movePiece();
+                        int initialX = initialLocation.getX();
+                        int initialY = initialLocation.getY();
+                        putButtonWithPiece(initialY, initialX);
+                        putButtonWithPiece(finalY, finalX);
+                        if(Math.abs(finalY-initialY)==1 && Math.abs(finalX-initialX)==1){
+                            putButtonWithPiece(initialY,finalX);
+                        }
+                        initialLocation = null;
+                        if(!ChessApplication.chessBoard.isWhitesTurn()){
+                            WhitesTurnLabel.setBackground(greyBG);
+                            BlacksTurnLabel.setBackground(greenBG);
+                        }
+                        else{
+                            WhitesTurnLabel.setBackground(greenBG);
+                            BlacksTurnLabel.setBackground(greyBG);
+                        }
                     }
-                    initialLocation = null;
-                    if(!ChessApplication.chessBoard.isWhitesTurn()){
-                        WhitesTurnLabel.setBackground(greyBG);
-                        BlacksTurnLabel.setBackground(greenBG);
-                    }
-                    else{
-                        WhitesTurnLabel.setBackground(greenBG);
-                        BlacksTurnLabel.setBackground(greyBG);
-                    }
+                }
+                if(ChessApplication.chessBoard.getPassedPawn()!=null){
+                    changePawnHbox.setVisible(true);
+                    changePawnHbox.setManaged(true);
                 }
                 if(ChessApplication.chessBoard.getGameStatus()==GameStatus.WHITE_CHECKMATED){
 //                    BoardGridPane.setVisible(false);
@@ -117,6 +128,7 @@ public class ChessController {
                     ErrorLabel.setVisible(false);
                     WinnerLabel.setText("White Won!");
                 }
+                //ErrorLabel.setText(""+ChessApplication.chessBoard.getPassedPawn());
             }
             catch (IllegalArgumentException e){
                 initialLocation=null;
@@ -128,5 +140,45 @@ public class ChessController {
     private String getPieceOnSquare(int x, int y) {
         Square square = ChessApplication.chessBoard.getSquareFromCoordinates(new Coordinates(x,y));
         return square.toString();
+    }
+
+    public void queenButtonPressed(ActionEvent actionEvent) {
+        PieceColor pieceColor = PieceColor.WHITE;
+        if(ChessApplication.chessBoard.isWhitesTurn()) pieceColor = PieceColor.BLACK;
+        ChessApplication.chessBoard.putPiece(ChessApplication.chessBoard.getPassedPawn(), new ChessPiece(pieceColor,PieceType.QUEEN));
+        putButtonWithPiece(ChessApplication.chessBoard.getPassedPawn().getY(),ChessApplication.chessBoard.getPassedPawn().getX());
+        ChessApplication.chessBoard.setPassedPawn(null);
+        changePawnHbox.setVisible(false);
+        changePawnHbox.setManaged(false);
+    }
+
+    public void rookButtonPressed(ActionEvent actionEvent) {
+        PieceColor pieceColor = PieceColor.WHITE;
+        if(ChessApplication.chessBoard.isWhitesTurn()) pieceColor = PieceColor.BLACK;
+        ChessApplication.chessBoard.putPiece(ChessApplication.chessBoard.getPassedPawn(), new ChessPiece(pieceColor,PieceType.ROOK));
+        putButtonWithPiece(ChessApplication.chessBoard.getPassedPawn().getY(),ChessApplication.chessBoard.getPassedPawn().getX());
+        ChessApplication.chessBoard.setPassedPawn(null);
+        changePawnHbox.setVisible(false);
+        changePawnHbox.setManaged(false);
+    }
+
+    public void knightButtonPressed(ActionEvent actionEvent) {
+        PieceColor pieceColor = PieceColor.WHITE;
+        if(ChessApplication.chessBoard.isWhitesTurn()) pieceColor = PieceColor.BLACK;
+        ChessApplication.chessBoard.putPiece(ChessApplication.chessBoard.getPassedPawn(), new ChessPiece(pieceColor,PieceType.KNIGHT));
+        putButtonWithPiece(ChessApplication.chessBoard.getPassedPawn().getY(),ChessApplication.chessBoard.getPassedPawn().getX());
+        ChessApplication.chessBoard.setPassedPawn(null);
+        changePawnHbox.setVisible(false);
+        changePawnHbox.setManaged(false);
+    }
+
+    public void bishopButtonPressed(ActionEvent actionEvent) {
+        PieceColor pieceColor = PieceColor.WHITE;
+        if(ChessApplication.chessBoard.isWhitesTurn()) pieceColor = PieceColor.BLACK;
+        ChessApplication.chessBoard.putPiece(ChessApplication.chessBoard.getPassedPawn(), new ChessPiece(pieceColor,PieceType.BISHOP));
+        putButtonWithPiece(ChessApplication.chessBoard.getPassedPawn().getY(),ChessApplication.chessBoard.getPassedPawn().getX());
+        ChessApplication.chessBoard.setPassedPawn(null);
+        changePawnHbox.setVisible(false);
+        changePawnHbox.setManaged(false);
     }
 }

@@ -15,6 +15,12 @@
         <Label fx:id="WhitesTurnLabel" text=" White's Turn   " visible="false"/>
         <Label fx:id="BlacksTurnLabel" text="   Black's Turn " visible="false"/>
     </HBox>
+    <HBox alignment="CENTER" fx:id="changePawnHbox" visible="false" managed="false">
+        <Button fx:id="queenButton" text="QUEEN" onAction="#queenButtonPressed"/>
+        <Button fx:id="rookButton" text="ROOK" onAction="#rookButtonPressed"/>
+        <Button fx:id="knightButton" text = "KNIGHT" onAction="#knightButtonPressed"/>
+        <Button fx:id="bishopButton" text="BISHOP" onAction="#bishopButtonPressed"/>
+    </HBox>
     <Label fx:id="ErrorLabel" style="-fx-text-fill: red"/>
     <Button fx:id="StartButton" text="Start" onAction="#StartButtonPressed"/>
     <GridPane alignment="CENTER" fx:id="BoardGridPane"/>

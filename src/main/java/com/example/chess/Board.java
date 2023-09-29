@@ -18,6 +18,8 @@ public class Board {
     private GameStatus gameStatus;
     private Coordinates twoSpacePawn;
 
+    private Coordinates passedPawn;
+
     public Board(){
         whitesTurn=true;
         this.boardMap = new HashMap<>();
@@ -30,6 +32,7 @@ public class Board {
         blackKingChecked=false;
         gameStatus = GameStatus.GAME_ON;
         twoSpacePawn = null;
+        passedPawn=null;
     }
 
 
@@ -54,11 +57,19 @@ public class Board {
     
     public void resetBoard(){
         whitesTurn=true;
+        this.boardMap.clear();
         putNullSquares();
+        possibleMoves.clear();
+        legalMoves.clear();
+        whiteKingChecked=false;
+        blackKingChecked=false;
+        gameStatus = GameStatus.GAME_ON;
+        twoSpacePawn = null;
+        passedPawn=null;
+        whitesTurn=true;
         setPawns();
         setSpecialPieces();
         setLegalMoves();
-        //printLegalMoves();
         blackKingCoordinates= new Coordinates(4,0);
         whiteKingCoordinates= new Coordinates(4,7);
     }
@@ -431,5 +442,11 @@ public class Board {
     }
     public Coordinates getTwoSpacePawn (){
         return twoSpacePawn;
+    }
+    public Coordinates getPassedPawn(){
+        return passedPawn;
+    }
+    public void setPassedPawn(Coordinates cor){
+        this.passedPawn=cor;
     }
 }
