@@ -17,7 +17,6 @@ public class Board {
     private Coordinates blackKingCoordinates;
     private GameStatus gameStatus;
     private Coordinates twoSpacePawn;
-    private boolean enPassant;
 
     public Board(){
         whitesTurn=true;
@@ -31,7 +30,6 @@ public class Board {
         blackKingChecked=false;
         gameStatus = GameStatus.GAME_ON;
         twoSpacePawn = null;
-        enPassant=false;
     }
 
 
@@ -433,8 +431,5 @@ public class Board {
     }
     public Coordinates getTwoSpacePawn (){
         return twoSpacePawn;
-    }
-    public void setEnPassant(boolean boo){
-        enPassant=boo;
     }
 }

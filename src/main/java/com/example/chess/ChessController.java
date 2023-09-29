@@ -80,6 +80,11 @@ public class ChessController {
                     int initialY = initialLocation.getY();
                     putButtonWithPiece(initialY, initialX);
                     putButtonWithPiece(finalY, finalX);
+                    if(Math.abs(finalY-initialY)==1 && Math.abs(finalX-initialX)==1){
+                        putButtonWithPiece(initialY,finalX);
+                        System.out.println("EN PASSANT");
+                        //ErrorLabel.setText(ChessApplication.chessBoard.getSquareFromCoordinates(new Coordinates(finalX,initialY)).getSquarePiece()+"!");
+                    }
                     initialLocation = null;
                     if(!ChessApplication.chessBoard.isWhitesTurn()){
                         WhitesTurnLabel.setBackground(greyBG);

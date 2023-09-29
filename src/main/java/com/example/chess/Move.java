@@ -28,13 +28,19 @@ public class Move {
 
     public void movePiece(){
         ChessPiece piece = board.getSquareFromCoordinates(initialCoordinates).getSquarePiece();
+        ChessPiece otherPiece = board.getSquareFromCoordinates(finalCoordinates).getSquarePiece();
         if (piece==null) throw new IllegalArgumentException();
         if (!isValidMove()) throw new IllegalArgumentException();
         if(board.isWhitesTurn() && piece.getPieceColor()==PieceColor.WHITE){
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
             if(piece.getPieceType()==PieceType.KING) board.setKingCoordinates(PieceColor.WHITE,finalCoordinates);
-            else if(piece.getPieceType()==PieceType.PAWN && Math.abs(yi-yf)==2) board.setTwoSpacePawn(finalCoordinates);
+            else if(piece.getPieceType()==PieceType.PAWN){
+                if(Math.abs(yi-yf)==2) board.setTwoSpacePawn(finalCoordinates);
+                else if(Math.abs(yi-yf)==1 && Math.abs(xi-xf)==1 && otherPiece==null){
+                    board.putPiece(board.getTwoSpacePawn(),null);
+                }
+            }
             else board.setTwoSpacePawn(null);
             board.setWhitesTurn(false);
             board.printMoves(board.getLegalMoves());
@@ -43,7 +49,12 @@ public class Move {
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
             if(piece.getPieceType()==PieceType.KING) board.setKingCoordinates(PieceColor.BLACK,finalCoordinates);
-            else if(piece.getPieceType()==PieceType.PAWN && Math.abs(yi-yf)==2) board.setTwoSpacePawn(finalCoordinates);
+            else if(piece.getPieceType()==PieceType.PAWN){
+                if(Math.abs(yi-yf)==2) board.setTwoSpacePawn(finalCoordinates);
+                else if(Math.abs(yi-yf)==1 && Math.abs(xi-xf)==1 && otherPiece==null){
+                    board.putPiece(board.getTwoSpacePawn(),null);
+                }
+            }
             else board.setTwoSpacePawn(null);
             board.setWhitesTurn(true);
             board.printMoves(board.getLegalMoves());
