@@ -20,6 +20,14 @@ public class Board {
 
     private Coordinates passedPawn;
 
+    private boolean whiteKingHasMoved;
+    private boolean whiteLeftRookHasMoved;
+    private boolean whiteRightRookHasMoved;
+    private boolean blackKingHasMoved;
+    private boolean blackLeftRookHasMoved;
+    private boolean blackRightRookHasMoved;
+
+
     public Board(){
         whitesTurn=true;
         this.boardMap = new HashMap<>();
@@ -33,6 +41,12 @@ public class Board {
         gameStatus = GameStatus.GAME_ON;
         twoSpacePawn = null;
         passedPawn=null;
+        whiteKingHasMoved=false;
+        whiteLeftRookHasMoved=false;
+        whiteRightRookHasMoved=false;
+        blackKingHasMoved=false;
+        blackLeftRookHasMoved=false;
+        blackRightRookHasMoved=false;
     }
 
 
