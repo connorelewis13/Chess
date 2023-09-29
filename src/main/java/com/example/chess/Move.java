@@ -42,7 +42,7 @@ public class Move {
                 }
                 else if(yf==0){
                     board.setPassedPawn(finalCoordinates);
-                    System.out.println("passed pawn: " +board.getPassedPawn());
+                    //System.out.println("passed pawn: " +board.getPassedPawn());
                 }
             }
             else{
@@ -50,7 +50,7 @@ public class Move {
                 board.setPassedPawn(null);
             }
             board.setWhitesTurn(false);
-            //board.printMoves(board.getLegalMoves());
+            board.printMoves(board.getLegalMoves());
         }
         else if (!board.isWhitesTurn() && piece.getPieceColor()==PieceColor.BLACK) {
             board.putPiece(initialCoordinates,null);
@@ -63,7 +63,7 @@ public class Move {
                 }
                 else if(yf==7){
                     board.setPassedPawn(finalCoordinates);
-                    System.out.println("passed pawn: " +board.getPassedPawn());
+                    //System.out.println("passed pawn: " +board.getPassedPawn());
                 }
             }
             else{

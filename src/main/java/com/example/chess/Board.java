@@ -155,9 +155,11 @@ public class Board {
             notTurnMoves1.add(move);
         }
         possibleMoves.clear();
+        setKingChecked(pieceColor,false);
         for(Coordinates[] move:notTurnMoves1){
             if(move[1].equals(kingCoordinates)){
                 setKingChecked(pieceColor,true);
+                System.out.println(getKingChecked(pieceColor));
             }
         }
         ArrayList<Coordinates> turnPieceCoordinates= getAllPieceCoordinates(pieceColor);
@@ -173,9 +175,17 @@ public class Board {
                 legalMoves.add(move);
             }
         }
-        if(legalMoves.size()==0){
+        if(legalMoves.size()==0 && getKingChecked(pieceColor)){
             setCheckMated(pieceColor);
+            //System.out.println("checkmate");
         }
+        else if(legalMoves.size()==0){
+            setStaleMate();
+        }
+    }
+
+    private void setStaleMate() {
+        gameStatus=GameStatus.STALEMATE;
     }
 
     private boolean doesntPutKingInCheck(Coordinates[] move, PieceColor pieceColor) {
@@ -448,5 +458,12 @@ public class Board {
     }
     public void setPassedPawn(Coordinates cor){
         this.passedPawn=cor;
+    }
+
+    public boolean getKingChecked(PieceColor pieceColor){
+        if(pieceColor==PieceColor.WHITE){
+            return whiteKingChecked;
+        }
+        else return blackKingChecked;
     }
 }

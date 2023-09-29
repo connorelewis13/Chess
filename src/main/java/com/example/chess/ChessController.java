@@ -71,7 +71,7 @@ public class ChessController {
             try {
                 ErrorLabel.setText("");
 
-                if(ChessApplication.chessBoard.getPassedPawn()==(null)){
+                if(ChessApplication.chessBoard.getPassedPawn()==(null) && ChessApplication.chessBoard.getGameStatus()==GameStatus.GAME_ON){
                     if (initialLocation == null) {
                         Button buttonPressed = (Button) event.getSource();
                         int x = GridPane.getColumnIndex(buttonPressed);
@@ -107,8 +107,6 @@ public class ChessController {
                     changePawnHbox.setManaged(true);
                 }
                 if(ChessApplication.chessBoard.getGameStatus()==GameStatus.WHITE_CHECKMATED){
-//                    BoardGridPane.setVisible(false);
-//                    BoardGridPane.setManaged(false);
                     WinnerLabel.setVisible(true);
                     WinnerLabel.setManaged(true);
                     turnHbox.setManaged(false);
@@ -118,8 +116,6 @@ public class ChessController {
                     WinnerLabel.setText("Black Won!");
                 }
                 else if(ChessApplication.chessBoard.getGameStatus()==GameStatus.BLACK_CHECKMATED){
-//                    BoardGridPane.setVisible(false);
-//                    BoardGridPane.setManaged(false);
                     WinnerLabel.setVisible(true);
                     WinnerLabel.setManaged(true);
                     turnHbox.setManaged(false);
@@ -127,6 +123,15 @@ public class ChessController {
                     ErrorLabel.setManaged(false);
                     ErrorLabel.setVisible(false);
                     WinnerLabel.setText("White Won!");
+                }
+                else if(ChessApplication.chessBoard.getGameStatus()==GameStatus.STALEMATE){
+                    WinnerLabel.setVisible(true);
+                    WinnerLabel.setManaged(true);
+                    turnHbox.setManaged(false);
+                    turnHbox.setVisible(false);
+                    ErrorLabel.setManaged(false);
+                    ErrorLabel.setVisible(false);
+                    WinnerLabel.setText("Stalemate");
                 }
                 //ErrorLabel.setText(""+ChessApplication.chessBoard.getPassedPawn());
             }
