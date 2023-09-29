@@ -308,11 +308,21 @@ public class Board {
             if(hasPiece(possibleCoordinates,oppositeColor)){
                 addMove(coordinates, possibleCoordinates);
             }
+            else if((new Coordinates(coordinates.getX()+1,coordinates.getY())).equals(twoSpacePawn)){
+                if(hasPiece(twoSpacePawn,oppositeColor)){
+                    addMove(coordinates,possibleCoordinates);
+                }
+            }
         }
         possibleCoordinates = new Coordinates(coordinates.getX()-1,coordinates.getY()+yDirection);
         if(possibleCoordinates.isInBounds()){
             if(hasPiece(possibleCoordinates,oppositeColor)){
                 addMove(coordinates, possibleCoordinates);
+            }
+            else if((new Coordinates(coordinates.getX()-1,coordinates.getY())).equals(twoSpacePawn)){
+                if(hasPiece(twoSpacePawn,oppositeColor)){
+                    addMove(coordinates,possibleCoordinates);
+                }
             }
         }
     }
