@@ -50,7 +50,7 @@ public class Move {
                 board.setPassedPawn(null);
             }
             board.setWhitesTurn(false);
-            board.printMoves(board.getLegalMoves());
+            if(board.getLegalMoves().size()==0 && board.getKingChecked(PieceColor.BLACK)) board.setCheckMated(PieceColor.BLACK);
         }
         else if (!board.isWhitesTurn() && piece.getPieceColor()==PieceColor.BLACK) {
             board.putPiece(initialCoordinates,null);
@@ -71,7 +71,7 @@ public class Move {
                 board.setPassedPawn(null);
             }
             board.setWhitesTurn(true);
-            //board.printMoves(board.getLegalMoves());
+            if(board.getLegalMoves().size()==0 && board.getKingChecked(PieceColor.WHITE)) board.setCheckMated(PieceColor.WHITE);
         }
         else throw new IllegalArgumentException();
     }

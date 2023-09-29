@@ -175,13 +175,13 @@ public class Board {
                 legalMoves.add(move);
             }
         }
-        if(legalMoves.size()==0 && getKingChecked(pieceColor)){
-            setCheckMated(pieceColor);
-            //System.out.println("checkmate");
-        }
-        else if(legalMoves.size()==0){
-            setStaleMate();
-        }
+//        if(legalMoves.size()==0 && getKingChecked(pieceColor)){
+//            setCheckMated(pieceColor);
+//            //System.out.println("checkmate");
+//        }
+//        else if(legalMoves.size()==0){
+//            setStaleMate();
+//        }
     }
 
     private void setStaleMate() {
