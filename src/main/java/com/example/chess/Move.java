@@ -34,6 +34,8 @@ public class Move {
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
             if(piece.getPieceType()==PieceType.KING) board.setKingCoordinates(PieceColor.WHITE,finalCoordinates);
+            else if(piece.getPieceType()==PieceType.PAWN && Math.abs(yi-yf)==2) board.setTwoSpacePawn(finalCoordinates);
+            else board.setTwoSpacePawn(null);
             board.setWhitesTurn(false);
             board.printMoves(board.getLegalMoves());
         }
@@ -41,6 +43,8 @@ public class Move {
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
             if(piece.getPieceType()==PieceType.KING) board.setKingCoordinates(PieceColor.BLACK,finalCoordinates);
+            else if(piece.getPieceType()==PieceType.PAWN && Math.abs(yi-yf)==2) board.setTwoSpacePawn(finalCoordinates);
+            else board.setTwoSpacePawn(null);
             board.setWhitesTurn(true);
             board.printMoves(board.getLegalMoves());
         }

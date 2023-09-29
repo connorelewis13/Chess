@@ -16,6 +16,7 @@ public class Board {
     private Coordinates whiteKingCoordinates;
     private Coordinates blackKingCoordinates;
     private GameStatus gameStatus;
+    private Coordinates twoSpacePawn;
 
     public Board(){
         whitesTurn=true;
@@ -28,6 +29,7 @@ public class Board {
         whiteKingChecked=false;
         blackKingChecked=false;
         gameStatus = GameStatus.GAME_ON;
+        twoSpacePawn = null;
     }
 
 
@@ -411,5 +413,13 @@ public class Board {
 
     public GameStatus getGameStatus(){
         return this.gameStatus;
+    }
+
+
+    public void setTwoSpacePawn(Coordinates coordinates){
+        twoSpacePawn=coordinates;
+    }
+    public Coordinates getTwoSpacePawn (){
+        return twoSpacePawn;
     }
 }
