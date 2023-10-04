@@ -130,19 +130,6 @@ public class Board {
         return boardMap.get(coordinates);
     }
 
-//    private ArrayList<Coordinates> getAllPieceCoordinates(){
-//        ArrayList<Coordinates> pieceCoordinates = new ArrayList<>();
-//        for(int x=0;x<8;x++){
-//            for(int y=0;y<8;y++){
-//                Square square = this.boardMap.get(new Coordinates(x,y));
-//                if(square.getSquarePiece()!=null){
-//                    pieceCoordinates.add(new Coordinates(x,y));
-//                }
-//            }
-//        }
-//        return pieceCoordinates;
-//    }
-
     private ArrayList<Coordinates> getAllPieceCoordinates(PieceColor pieceColor){
         ArrayList<Coordinates> pieceCoordinates = new ArrayList<>();
         for(int x=0;x<8;x++){
@@ -308,7 +295,7 @@ public class Board {
         ArrayList<Coordinates> possibleCoordinatesArrayList = new ArrayList<>();
         PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
         if(pieceColor==PieceColor.WHITE){
-            if(!whiteKingHasMoved){
+            if(!whiteKingHasMoved && !whiteKingChecked){
                 if(!white07RookHasMoved && noPiecesInBetween(coordinates, new Coordinates(0,7))){
                     Coordinates[] move = new Coordinates[]{coordinates, new Coordinates(3,7)};
                     if(doesntPutKingInCheck(move,PieceColor.WHITE)) possibleCoordinatesArrayList.add(new Coordinates(2,7));
@@ -320,7 +307,7 @@ public class Board {
             }
         }
         if(pieceColor==PieceColor.BLACK){
-            if(!blackKingHasMoved){
+            if(!blackKingHasMoved && !blackKingChecked){
                 if(!black00RookHasMoved && noPiecesInBetween(coordinates, new Coordinates(0,0))){
                     Coordinates[] move = new Coordinates[]{coordinates, new Coordinates(3,0)};
                     if(doesntPutKingInCheck(move,PieceColor.BLACK)) possibleCoordinatesArrayList.add(new Coordinates(2,0));
