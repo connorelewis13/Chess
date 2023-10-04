@@ -34,21 +34,7 @@ public class Move {
         if(board.isWhitesTurn() && piece.getPieceColor()==PieceColor.WHITE){
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
-            if(piece.getPieceType()==PieceType.KING) board.setKingCoordinates(PieceColor.WHITE,finalCoordinates);
-            else if(piece.getPieceType()==PieceType.PAWN){
-                if(Math.abs(yi-yf)==2) board.setTwoSpacePawn(finalCoordinates);
-                else if(Math.abs(yi-yf)==1 && Math.abs(xi-xf)==1 && otherPiece==null){
-                    board.putPiece(board.getTwoSpacePawn(),null);
-                }
-                else if(yf==0){
-                    board.setPassedPawn(finalCoordinates);
-                    //System.out.println("passed pawn: " +board.getPassedPawn());
-                }
-            }
-            else{
-                board.setTwoSpacePawn(null);
-                board.setPassedPawn(null);
-            }
+            setBoardPieceConditions(0);
             board.setWhitesTurn(false);
             if(board.getLegalMoves().size()==0 && board.getKingChecked(PieceColor.BLACK)) board.setCheckMated(PieceColor.BLACK);
             else if(board.getLegalMoves().size()==0) board.setStaleMate();
@@ -56,26 +42,54 @@ public class Move {
         else if (!board.isWhitesTurn() && piece.getPieceColor()==PieceColor.BLACK) {
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
-            if(piece.getPieceType()==PieceType.KING) board.setKingCoordinates(PieceColor.BLACK,finalCoordinates);
-            else if(piece.getPieceType()==PieceType.PAWN){
-                if(Math.abs(yi-yf)==2) board.setTwoSpacePawn(finalCoordinates);
-                else if(Math.abs(yi-yf)==1 && Math.abs(xi-xf)==1 && otherPiece==null){
-                    board.putPiece(board.getTwoSpacePawn(),null);
-                }
-                else if(yf==7){
-                    board.setPassedPawn(finalCoordinates);
-                    //System.out.println("passed pawn: " +board.getPassedPawn());
-                }
-            }
-            else{
-                board.setTwoSpacePawn(null);
-                board.setPassedPawn(null);
-            }
+            setBoardPieceConditions(7);
             board.setWhitesTurn(true);
             if(board.getLegalMoves().size()==0 && board.getKingChecked(PieceColor.WHITE)) board.setCheckMated(PieceColor.WHITE);
             else if(board.getLegalMoves().size()==0) board.setStaleMate();
         }
         else throw new IllegalArgumentException();
+    }
+
+    private void setBoardPieceConditions(int endOfBoard) {
+        Coordinates[] startingCoordinates = new Coordinates[]{
+                new Coordinates(0,0),
+                new Coordinates(0,7),
+                new Coordinates(7,7),
+                new Coordinates(7,0),
+        };
+        PieceColor pieceColor = piece1.getPieceColor();
+        if(piece1.getPieceType()==PieceType.KING){
+            board.setKingCoordinates(pieceColor,finalCoordinates);
+            if(xf-xi==2){
+
+            }
+            board.setKingHasMoved(pieceColor);
+        }
+        else if(piece1.getPieceType()==PieceType.ROOK){
+            for(Coordinates c:startingCoordinates){
+                if(initialCoordinates.equals(startingCoordinates)){
+                    board.setRookHasMoved(initialCoordinates);
+                }
+            }
+        }
+        else if(piece1.getPieceType()==PieceType.PAWN){
+            if(Math.abs(yi-yf)==2) board.setTwoSpacePawn(finalCoordinates);
+            else if(Math.abs(yi-yf)==1 && Math.abs(xi-xf)==1 && piece2 == null){
+                board.putPiece(board.getTwoSpacePawn(),null);
+            }
+            else if(yf==endOfBoard){
+                board.setPassedPawn(finalCoordinates);
+            }
+        }
+        else{
+            board.setTwoSpacePawn(null);
+            board.setPassedPawn(null);
+        }
+        for(Coordinates c:startingCoordinates){
+            if(finalCoordinates.equals(c)){
+                board.setRookHasMoved(finalCoordinates);
+            }
+        }
     }
 
 

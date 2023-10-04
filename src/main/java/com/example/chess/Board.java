@@ -517,4 +517,24 @@ public class Board {
         }
         else return blackKingChecked;
     }
+    public void setKingHasMoved(PieceColor pieceColor){
+        if(pieceColor==PieceColor.WHITE){
+            whiteKingHasMoved=true;
+        }
+        if(pieceColor==PieceColor.BLACK){
+            blackKingHasMoved=true;
+        }
+    }
+    public void setRookHasMoved(Coordinates c){
+        int x =c.getX();
+        int y =c.getY();
+        if(x==0){
+            if(y==0) black00RookHasMoved=true;
+            if(y==7) white07RookHasMoved=true;
+        }
+        else if(x==7){
+            if(y==0) black70RookHasMoved=true;
+            if(y==7) white77RookHasMoved=true;
+        }
+    }
 }
