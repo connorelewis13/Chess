@@ -537,4 +537,31 @@ public class Board {
             if(y==7) white77RookHasMoved=true;
         }
     }
+    public Coordinates getRookCastledWithOldCoor(Coordinates finalCoordinates){
+        int x = finalCoordinates.getX();
+        int y = finalCoordinates.getY();
+        if(x==2){
+            if(y==0) return new Coordinates(0,0);
+            if(y==7) return new Coordinates(0,7);
+        }
+        else if(x==6){
+            if(y==0) return new Coordinates(7,0);
+            if(y==7) return new Coordinates(7,7);
+        }
+        return null;
+    }
+
+    public Coordinates getRookCastledWithNewCoor(Coordinates finalCoordinates){
+        int x = finalCoordinates.getX();
+        int y = finalCoordinates.getY();
+        if(x==2){
+            if(y==0) return new Coordinates(3,0);
+            if(y==7) return new Coordinates(3,7);
+        }
+        else if(x==6){
+            if(y==0) return new Coordinates(5,0);
+            if(y==7) return new Coordinates(5,7);
+        }
+        return null;
+    }
 }

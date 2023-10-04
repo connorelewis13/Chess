@@ -60,8 +60,11 @@ public class Move {
         PieceColor pieceColor = piece1.getPieceColor();
         if(piece1.getPieceType()==PieceType.KING){
             board.setKingCoordinates(pieceColor,finalCoordinates);
-            if(xf-xi==2){
-
+            if(Math.abs(xf-xi)==2){
+                Coordinates oldRookCoordinates = board.getRookCastledWithOldCoor(finalCoordinates);
+                Coordinates newRookCoordinates = board.getRookCastledWithNewCoor(finalCoordinates);
+                board.putPiece(oldRookCoordinates,null);
+                board.putPiece(newRookCoordinates, new ChessPiece(pieceColor,PieceType.ROOK));
             }
             board.setKingHasMoved(pieceColor);
         }
