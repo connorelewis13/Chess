@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class Board {
     private HashMap<Coordinates,Square> boardMap;
-    //1,1 will be bottom left
+    private boolean checkingIfBeingPutInCheck;
     private boolean whitesTurn;
     private ArrayList<Coordinates[]> possibleMoves;
     private ArrayList<Coordinates[]> legalMoves;
@@ -30,6 +30,7 @@ public class Board {
 
     public Board(){
         whitesTurn=true;
+        checkingIfBeingPutInCheck = false;
         this.boardMap = new HashMap<>();
         putNullSquares();
         possibleMoves = new ArrayList<>();
@@ -189,6 +190,7 @@ public class Board {
 
     private boolean doesntPutKingInCheck(Coordinates[] move, PieceColor pieceColor) {
         possibleMoves.clear();
+        checkingIfBeingPutInCheck=true;
         Boolean returnBool = true;
         ChessPiece piece = getSquareFromCoordinates(move[0]).getSquarePiece();
         ChessPiece piece2 = getSquareFromCoordinates(move[1]).getSquarePiece();
@@ -210,6 +212,7 @@ public class Board {
             setKingCoordinates(pieceColor,move[0]);
         }
         possibleMoves.clear();
+        checkingIfBeingPutInCheck=false;
         return returnBool;
     }
 
@@ -288,7 +291,9 @@ public class Board {
         for(Coordinates possibleCoordinate:possibleCoordinates){
             if(possibleCoordinate.isInBounds() && !hasPiece(possibleCoordinate,pieceColor)) addMove(coordinates,possibleCoordinate);
         }
-        checkForCastling(coordinates);
+        if(!checkingIfBeingPutInCheck){
+            checkForCastling(coordinates);
+        }
     }
 
     private void checkForCastling(Coordinates coordinates) {
