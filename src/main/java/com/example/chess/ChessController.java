@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -27,6 +28,7 @@ public class ChessController {
     @FXML private Button rookButton;
     @FXML private Button bishopButton;
     @FXML private Button knightButton;
+    private ChessPieceImages chessPieceImages = new ChessPieceImages();
 
     public void StartButtonPressed(ActionEvent actionEvent) {
 //        BoardGridPane.setVisible(true);
@@ -60,7 +62,13 @@ public class ChessController {
         button.setMaxHeight(70);
         button.setMinWidth(70);
         button.setMaxWidth(70);
-        button.setText(getPieceOnSquare(x, y));
+        //button.setText(getPieceOnSquare(x, y));
+        try{
+            button.setGraphic(new ImageView(getImageOnSquare(x,y)));
+        }
+        catch (NullPointerException e){
+            button.setText(getPieceStringOnSquare(x, y));
+        }
         button.setOnAction(chessButtonPressed);
         BoardGridPane.add(button, x, y);
     }
@@ -146,9 +154,17 @@ public class ChessController {
         }
     };
 
-    private String getPieceOnSquare(int x, int y) {
+    private String getPieceStringOnSquare(int x, int y) {
         Square square = ChessApplication.chessBoard.getSquareFromCoordinates(new Coordinates(x,y));
         return square.toString();
+    }
+    private ChessPiece getChessPieceOnSquare(int x, int y){
+        return ChessApplication.chessBoard.getSquareFromCoordinates(new Coordinates(x,y)).getSquarePiece();
+    }
+    private Image getImageOnSquare(int x, int y){
+        ChessPiece chessPiece = getChessPieceOnSquare(x,y);
+        //System.out.print(squareString);
+        return chessPieceImages.getPieceImage(chessPiece);
     }
 
     public void queenButtonPressed(ActionEvent actionEvent) {
