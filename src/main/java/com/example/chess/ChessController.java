@@ -54,7 +54,7 @@ public class ChessController {
                 putButtonWithPiece(x, y);
             }
         }
-        ChessApplication.chessBoard.printLegalMoves();
+        //ChessApplication.chessBoard.printLegalMoves();
     }
 
     private void putButtonWithPiece(int x, int y) {
@@ -115,7 +115,7 @@ public class ChessController {
                             BlacksTurnLabel.setBackground(greyBG);
                         }
                     }
-                    ChessApplication.chessBoard.printLegalMoves();
+                    //ChessApplication.chessBoard.printLegalMoves();
                 }
                 if(ChessApplication.chessBoard.getPassedPawn()!=null){
                     changePawnHbox.setVisible(true);

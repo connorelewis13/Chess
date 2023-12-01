@@ -13,9 +13,6 @@ public class Square {
         return sqaurePiece;
     }
 
-    public void setSqaurePiece(ChessPiece sqaurePiece) {
-        this.sqaurePiece = sqaurePiece;
-    }
     @Override
     public String toString(){
         if(sqaurePiece==null) return "       ";
