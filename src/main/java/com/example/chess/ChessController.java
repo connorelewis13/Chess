@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
@@ -26,7 +27,6 @@ public class ChessController {
     @FXML private Button rookButton;
     @FXML private Button bishopButton;
     @FXML private Button knightButton;
-
 
     public void StartButtonPressed(ActionEvent actionEvent) {
 //        BoardGridPane.setVisible(true);
