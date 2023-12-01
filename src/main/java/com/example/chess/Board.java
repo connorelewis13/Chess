@@ -177,13 +177,11 @@ public class Board {
         for(Coordinates[] move: possibleMoves){
                 turnMoves1.add(move);
         }
-        checkingIfBeingPutInCheck=true;
         for(Coordinates[] move: turnMoves1){
             if(doesntPutKingInCheck(move, pieceColor)){
                 legalMoves.add(move);
             }
         }
-        checkingIfBeingPutInCheck=false;
     }
 
     public void setStaleMate() {
@@ -191,29 +189,36 @@ public class Board {
     }
 
     private boolean doesntPutKingInCheck(Coordinates[] move, PieceColor pieceColor) {
-        possibleMoves.clear();
-        Boolean returnBool = true;
-        ChessPiece piece = getSquareFromCoordinates(move[0]).getSquarePiece();
-        ChessPiece piece2 = getSquareFromCoordinates(move[1]).getSquarePiece();
-        putPiece(move[1],piece);
-        putPiece(move[0],null);
-        if(piece.getPieceType()==PieceType.KING){
-            setKingCoordinates(pieceColor,move[1]);
+        if(checkingIfBeingPutInCheck){
+            return true;
         }
-        ArrayList<Coordinates> notTurnPieceCoordinates = getAllPieceCoordinates(pieceColor.oppositeColor());
-        for(Coordinates coordinates:notTurnPieceCoordinates){
-            addPieceMoves(coordinates);
+        else{
+            possibleMoves.clear();
+            Boolean returnBool = true;
+            ChessPiece piece = getSquareFromCoordinates(move[0]).getSquarePiece();
+            ChessPiece piece2 = getSquareFromCoordinates(move[1]).getSquarePiece();
+            putPiece(move[1],piece);
+            putPiece(move[0],null);
+            if(piece.getPieceType()==PieceType.KING){
+                setKingCoordinates(pieceColor,move[1]);
+            }
+            ArrayList<Coordinates> notTurnPieceCoordinates = getAllPieceCoordinates(pieceColor.oppositeColor());
+            checkingIfBeingPutInCheck=true;
+            for(Coordinates coordinates:notTurnPieceCoordinates){
+                addPieceMoves(coordinates);
+            }
+            checkingIfBeingPutInCheck=false;
+            for(Coordinates[] move1 : possibleMoves){
+                if(move1[1].equals(getKingCoordinates(pieceColor))) returnBool = false;
+            }
+            putPiece(move[1],piece2);
+            putPiece(move[0],piece);
+            if(piece.getPieceType()==PieceType.KING){
+                setKingCoordinates(pieceColor,move[0]);
+            }
+            possibleMoves.clear();
+            return returnBool;
         }
-        for(Coordinates[] move1 : possibleMoves){
-            if(move1[1].equals(getKingCoordinates(pieceColor))) returnBool = false;
-        }
-        putPiece(move[1],piece2);
-        putPiece(move[0],piece);
-        if(piece.getPieceType()==PieceType.KING){
-            setKingCoordinates(pieceColor,move[0]);
-        }
-        possibleMoves.clear();
-        return returnBool;
     }
 
     private void addPieceMoves(Coordinates coordinates) {
