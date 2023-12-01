@@ -177,11 +177,13 @@ public class Board {
         for(Coordinates[] move: possibleMoves){
                 turnMoves1.add(move);
         }
+        checkingIfBeingPutInCheck=true;
         for(Coordinates[] move: turnMoves1){
             if(doesntPutKingInCheck(move, pieceColor)){
                 legalMoves.add(move);
             }
         }
+        checkingIfBeingPutInCheck=false;
     }
 
     public void setStaleMate() {
@@ -190,7 +192,6 @@ public class Board {
 
     private boolean doesntPutKingInCheck(Coordinates[] move, PieceColor pieceColor) {
         possibleMoves.clear();
-        checkingIfBeingPutInCheck=true;
         Boolean returnBool = true;
         ChessPiece piece = getSquareFromCoordinates(move[0]).getSquarePiece();
         ChessPiece piece2 = getSquareFromCoordinates(move[1]).getSquarePiece();
@@ -212,7 +213,6 @@ public class Board {
             setKingCoordinates(pieceColor,move[0]);
         }
         possibleMoves.clear();
-        checkingIfBeingPutInCheck=false;
         return returnBool;
     }
 
