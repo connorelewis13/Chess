@@ -577,4 +577,12 @@ public class Board {
         if((whitesTurn && !hasPiece(initial,PieceColor.WHITE)) || (!whitesTurn && hasPiece(initial,PieceColor.WHITE))) return true;
         return false;
     }
+
+    public void printLegalMoves(){
+        String returnString ="";
+        for(Coordinates[] move:legalMoves){
+            returnString+= move[0]+", "+move[1]+"\n";
+        }
+        System.out.println(returnString);
+    }
 }
