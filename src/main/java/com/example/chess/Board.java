@@ -386,6 +386,7 @@ public class Board {
     }
 
     private boolean hasPiece(Coordinates coordinates){
+        if(!coordinates.isInBounds()) return false;
         return boardMap.get(coordinates).getSquarePiece()!=null;
     }
     private boolean hasPiece(Coordinates coordinates, PieceColor pieceColor){

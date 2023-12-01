@@ -149,7 +149,7 @@ public class ChessController {
             }
             catch (IllegalArgumentException e){
                 initialLocation=null;
-                ErrorLabel.setText("Illegal Move");
+                ErrorLabel.setText(e.getMessage());
             }
         }
     };

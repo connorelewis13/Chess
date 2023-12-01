@@ -27,18 +27,19 @@ public class Move {
 
 
     public void movePiece(){
+        ArrayList<Coordinates[]> legalMoves = board.getLegalMoves();
         ChessPiece piece = board.getSquareFromCoordinates(initialCoordinates).getSquarePiece();
         ChessPiece otherPiece = board.getSquareFromCoordinates(finalCoordinates).getSquarePiece();
-        if (piece==null) throw new IllegalArgumentException();
-        if (!isValidMove()) throw new IllegalArgumentException();
+        if (piece==null) throw new IllegalArgumentException("Piece is Null");
+        if (!isValidMove()) throw new IllegalArgumentException("Invalid Move"+initialCoordinates+piece.getPieceColor()+finalCoordinates);
         if(board.isWhitesTurn() && piece.getPieceColor()==PieceColor.WHITE){
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
             setBoardPieceConditions(0);
             board.setWhitesTurn(false);
             board.setKingChecked(PieceColor.WHITE,false);
-            if(board.getLegalMoves().size()==0 && board.getKingChecked(PieceColor.BLACK)) board.setCheckMated(PieceColor.BLACK);
-            else if(board.getLegalMoves().size()==0) board.setStaleMate();
+            if(legalMoves.size()==0 && board.getKingChecked(PieceColor.BLACK)) board.setCheckMated(PieceColor.BLACK);
+            else if(legalMoves.size()==0) board.setStaleMate();
         }
         else if (!board.isWhitesTurn() && piece.getPieceColor()==PieceColor.BLACK) {
             board.putPiece(initialCoordinates,null);
@@ -46,10 +47,10 @@ public class Move {
             setBoardPieceConditions(7);
             board.setWhitesTurn(true);
             board.setKingChecked(PieceColor.BLACK,false);
-            if(board.getLegalMoves().size()==0 && board.getKingChecked(PieceColor.WHITE)) board.setCheckMated(PieceColor.WHITE);
-            else if(board.getLegalMoves().size()==0) board.setStaleMate();
+            if(legalMoves.size()==0 && board.getKingChecked(PieceColor.WHITE)) board.setCheckMated(PieceColor.WHITE);
+            else if(legalMoves.size()==0) board.setStaleMate();
         }
-        else throw new IllegalArgumentException();
+        else throw new IllegalArgumentException("Not your turn");
     }
 
     private void setBoardPieceConditions(int endOfBoard) {
