@@ -296,12 +296,12 @@ public class Board {
         for(Coordinates possibleCoordinate:possibleCoordinates){
             if(possibleCoordinate.isInBounds() && !hasPiece(possibleCoordinate,pieceColor)) addMove(coordinates,possibleCoordinate);
         }
-        if(!checkingIfBeingPutInCheck){
-            checkForCastling(coordinates);
-        }
+        checkForCastling(coordinates);
     }
 
     private void checkForCastling(Coordinates coordinates) {
+        ArrayList<Coordinates[]> savePossibleMoves = new ArrayList<>();
+        savePossibleMoves.addAll(possibleMoves);
         ArrayList<Coordinates> possibleCoordinatesArrayList = new ArrayList<>();
         PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
         if(pieceColor==PieceColor.WHITE){
@@ -331,6 +331,7 @@ public class Board {
         for(Coordinates c:possibleCoordinatesArrayList){
             addMove(coordinates,c);
         }
+        possibleMoves.addAll(savePossibleMoves);
     }
 
     private void addRookMoves(Coordinates coordinates) {
