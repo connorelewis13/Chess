@@ -552,4 +552,18 @@ public class Board {
         }
         return null;
     }
+
+    public String whyNotLegal(Coordinates c1, Coordinates c2){
+        Coordinates[] coordinates = {c1,c2};
+        if(legalMoves.contains(coordinates)) return "Move is valid";
+        else if(!c2.isInBounds()) return "Final coor is out of bounds";
+        else if(!doesntPutKingInCheck(coordinates,getSquareFromCoordinates(c1).getSquarePiece().getPieceColor())) return "puts your king in check";
+        else if(hasPiece(c2,getSquareFromCoordinates(c1).getSquarePiece().getPieceColor())) return "other piece is same color";
+        else if(wrongTurn(c1)) return "wrong turn";
+        return "move does not correspond to piece";
+    }
+    private boolean wrongTurn(Coordinates initial){
+        if((whitesTurn && !hasPiece(initial,PieceColor.WHITE)) || (!whitesTurn && hasPiece(initial,PieceColor.WHITE))) return true;
+        return false;
+    }
 }

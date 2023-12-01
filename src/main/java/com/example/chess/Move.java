@@ -31,7 +31,7 @@ public class Move {
         ChessPiece piece = board.getSquareFromCoordinates(initialCoordinates).getSquarePiece();
         ChessPiece otherPiece = board.getSquareFromCoordinates(finalCoordinates).getSquarePiece();
         if (piece==null) throw new IllegalArgumentException("Piece is Null");
-        if (!isValidMove()) throw new IllegalArgumentException("Invalid Move"+initialCoordinates+piece.getPieceColor()+finalCoordinates);
+        if (!isValidMove()) throw new IllegalArgumentException(board.whyNotLegal(initialCoordinates,finalCoordinates));
         if(board.isWhitesTurn() && piece.getPieceColor()==PieceColor.WHITE){
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);

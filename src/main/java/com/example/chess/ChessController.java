@@ -38,6 +38,7 @@ public class ChessController {
         turnHbox.setVisible(true);
         ErrorLabel.setManaged(true);
         ErrorLabel.setVisible(true);
+        ErrorLabel.setText("");
         WinnerLabel.setVisible(false);
         WinnerLabel.setManaged(false);
         ChessApplication.chessBoard.resetBoard();
@@ -99,7 +100,7 @@ public class ChessController {
                             putButtonWithPiece(finalX, initialY);
                         }
                         if(Math.abs(finalX-initialX)==2 && finalY==initialY){
-                            for(int i = 0;i<7;i++){
+                            for(int i = 0;i<8;i++){
                                 putButtonWithPiece(i,initialY);
                             }
                         }
