@@ -38,6 +38,7 @@ public class Move {
             setBoardPieceConditions(0);
             board.setWhitesTurn(false);
             board.setKingChecked(PieceColor.WHITE,false);
+            legalMoves = board.getLegalMoves();
             if(legalMoves.size()==0 && board.getKingChecked(PieceColor.BLACK)) board.setCheckMated(PieceColor.BLACK);
             else if(legalMoves.size()==0) board.setStaleMate();
         }
@@ -47,6 +48,7 @@ public class Move {
             setBoardPieceConditions(7);
             board.setWhitesTurn(true);
             board.setKingChecked(PieceColor.BLACK,false);
+            legalMoves = board.getLegalMoves();
             if(legalMoves.size()==0 && board.getKingChecked(PieceColor.WHITE)) board.setCheckMated(PieceColor.WHITE);
             else if(legalMoves.size()==0) board.setStaleMate();
         }
