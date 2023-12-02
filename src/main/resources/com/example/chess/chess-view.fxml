@@ -10,7 +10,7 @@
 <VBox alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.chess.ChessController">
 
-    <Label fx:id="Title" text="Chess"/>
+    <Label fx:id="Title" text="Chess: Made by Connor Lewis"/>
     <HBox alignment="CENTER" fx:id="turnHbox">
         <Label fx:id="WhitesTurnLabel" text=" White's Turn   " visible="false"/>
         <Label fx:id="BlacksTurnLabel" text="   Black's Turn " visible="false"/>
