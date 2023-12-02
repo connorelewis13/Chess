@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 public class Board {
     private HashMap<Coordinates,Square> boardMap;
+    private HashMap<Coordinates,Color> colorBoardMap;
     private boolean checkingIfBeingPutInCheck;
     private boolean whitesTurn;
     private ArrayList<Coordinates[]> possibleMoves;
@@ -32,7 +33,9 @@ public class Board {
         whitesTurn=true;
         checkingIfBeingPutInCheck = false;
         this.boardMap = new HashMap<>();
+        this.colorBoardMap = new HashMap<>();
         putNullSquares();
+        putColors();
         possibleMoves = new ArrayList<>();
         legalMoves = new ArrayList<>();
         blackKingCoordinates=null;
@@ -50,6 +53,9 @@ public class Board {
         black70RookHasMoved =false;
     }
 
+    public HashMap<Coordinates, Color> getColorBoardMap() {
+        return colorBoardMap;
+    }
 
     public void setWhitesTurn(boolean whitesTurn){
         this.whitesTurn=whitesTurn;
@@ -60,6 +66,16 @@ public class Board {
             for(int y=0;y<8;y++){
                 this.boardMap.put(new Coordinates(x,y),new Square(null));
             }
+        }
+    }
+    private void putColors(){
+        Color initialColor = Color.WHITE;
+        for(int x=0;x<8;x++){
+            for(int y=0;y<8;y++){
+                this.colorBoardMap.put(new Coordinates(x,y), initialColor);
+                initialColor = initialColor.oppositeColor();
+            }
+            initialColor = initialColor.oppositeColor();
         }
     }
 
@@ -98,15 +114,15 @@ public class Board {
     private void setSpecialPieces() {
         PieceType[] pieceTypes = new PieceType[]{PieceType.ROOK,PieceType.KNIGHT,PieceType.BISHOP,PieceType.QUEEN,PieceType.KING,PieceType.BISHOP,PieceType.KNIGHT,PieceType.ROOK};
         for(int x=0;x<8;x++){
-            putPiece(new Coordinates(x,0),new ChessPiece(PieceColor.BLACK,pieceTypes[x]));
-            putPiece(new Coordinates(x,7),new ChessPiece(PieceColor.WHITE,pieceTypes[x]));
+            putPiece(new Coordinates(x,0),new ChessPiece(Color.BLACK,pieceTypes[x]));
+            putPiece(new Coordinates(x,7),new ChessPiece(Color.WHITE,pieceTypes[x]));
         }
     }
 
     private void setPawns() {
         for(int x=0;x<8;x++){
-            putPiece(new Coordinates(x,6), new ChessPiece(PieceColor.WHITE,PieceType.PAWN));
-            putPiece(new Coordinates(x,1), new ChessPiece(PieceColor.BLACK,PieceType.PAWN));
+            putPiece(new Coordinates(x,6), new ChessPiece(Color.WHITE,PieceType.PAWN));
+            putPiece(new Coordinates(x,1), new ChessPiece(Color.BLACK,PieceType.PAWN));
         }
     }
     @Override
@@ -131,13 +147,13 @@ public class Board {
         return boardMap.get(coordinates);
     }
 
-    private ArrayList<Coordinates> getAllPieceCoordinates(PieceColor pieceColor){
+    private ArrayList<Coordinates> getAllPieceCoordinates(Color color){
         ArrayList<Coordinates> pieceCoordinates = new ArrayList<>();
         for(int x=0;x<8;x++){
             for(int y=0;y<8;y++){
                 Square square = this.boardMap.get(new Coordinates(x,y));
                 if(square.getSquarePiece()!=null){
-                    if(square.getSquarePiece().getPieceColor()==pieceColor){
+                    if(square.getSquarePiece().getPieceColor()== color){
                         pieceCoordinates.add(new Coordinates(x,y));
                     }
                 }
@@ -151,10 +167,11 @@ public class Board {
         legalMoves.clear();
         ArrayList<Coordinates[]> notTurnMoves1 = new ArrayList<>();
         ArrayList<Coordinates[]> turnMoves1 = new ArrayList<>();
-        PieceColor pieceColor;
+        Color color;
         Coordinates kingCoordinates;
-        if(whitesTurn){ pieceColor=PieceColor.WHITE; kingCoordinates=whiteKingCoordinates;} else{pieceColor=PieceColor.BLACK; kingCoordinates = blackKingCoordinates;}
-        ArrayList<Coordinates> notTurnPieceCoordinates = getAllPieceCoordinates(pieceColor.oppositeColor());
+        if(whitesTurn){ color = Color.WHITE; kingCoordinates=whiteKingCoordinates;} else{
+            color = Color.BLACK; kingCoordinates = blackKingCoordinates;}
+        ArrayList<Coordinates> notTurnPieceCoordinates = getAllPieceCoordinates(color.oppositeColor());
         //printCoordinatesList(notTurnPieceCoordinates);
         for(Coordinates coordinates:notTurnPieceCoordinates){
             addPieceMoves(coordinates);
@@ -163,14 +180,14 @@ public class Board {
             notTurnMoves1.add(move);
         }
         possibleMoves.clear();
-        setKingChecked(pieceColor,false);
+        setKingChecked(color,false);
         for(Coordinates[] move:notTurnMoves1){
             if(move[1].equals(kingCoordinates)){
-                setKingChecked(pieceColor,true);
-                System.out.println(getKingChecked(pieceColor));
+                setKingChecked(color,true);
+                System.out.println(getKingChecked(color));
             }
         }
-        ArrayList<Coordinates> turnPieceCoordinates= getAllPieceCoordinates(pieceColor);
+        ArrayList<Coordinates> turnPieceCoordinates= getAllPieceCoordinates(color);
         for(Coordinates coordinates:turnPieceCoordinates){
             addPieceMoves(coordinates);
         }
@@ -178,7 +195,7 @@ public class Board {
                 turnMoves1.add(move);
         }
         for(Coordinates[] move: turnMoves1){
-            if(doesntPutKingInCheck(move, pieceColor)){
+            if(doesntPutKingInCheck(move, color)){
                 legalMoves.add(move);
             }
         }
@@ -188,7 +205,7 @@ public class Board {
         gameStatus=GameStatus.STALEMATE;
     }
 
-    private boolean doesntPutKingInCheck(Coordinates[] move, PieceColor pieceColor) {
+    private boolean doesntPutKingInCheck(Coordinates[] move, Color color) {
         if(checkingIfBeingPutInCheck){
             return true;
         }
@@ -200,21 +217,21 @@ public class Board {
             putPiece(move[1],piece);
             putPiece(move[0],null);
             if(piece.getPieceType()==PieceType.KING){
-                setKingCoordinates(pieceColor,move[1]);
+                setKingCoordinates(color,move[1]);
             }
-            ArrayList<Coordinates> notTurnPieceCoordinates = getAllPieceCoordinates(pieceColor.oppositeColor());
+            ArrayList<Coordinates> notTurnPieceCoordinates = getAllPieceCoordinates(color.oppositeColor());
             checkingIfBeingPutInCheck=true;
             for(Coordinates coordinates:notTurnPieceCoordinates){
                 addPieceMoves(coordinates);
             }
             checkingIfBeingPutInCheck=false;
             for(Coordinates[] move1 : possibleMoves){
-                if(move1[1].equals(getKingCoordinates(pieceColor))) returnBool = false;
+                if(move1[1].equals(getKingCoordinates(color))) returnBool = false;
             }
             putPiece(move[1],piece2);
             putPiece(move[0],piece);
             if(piece.getPieceType()==PieceType.KING){
-                setKingCoordinates(pieceColor,move[0]);
+                setKingCoordinates(color,move[0]);
             }
             possibleMoves.clear();
             return returnBool;
@@ -251,7 +268,7 @@ public class Board {
     }
 
     private void addBishopMoves(Coordinates coordinates) {
-        PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
+        Color color = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
         ArrayList<Coordinates> possibleCoordinates = new ArrayList<>();
         for(int n=1;n<8;n++){
             possibleCoordinates.add(new Coordinates(coordinates.getX()+n, coordinates.getY()+n));
@@ -260,12 +277,12 @@ public class Board {
             possibleCoordinates.add(new Coordinates(coordinates.getX()-n, coordinates.getY()+n));
         }
         for(Coordinates possibleCoordinate: possibleCoordinates){
-            if(possibleCoordinate.isInBounds() && !hasPiece(possibleCoordinate,pieceColor) && noPiecesInBetween(coordinates,possibleCoordinate)) addMove(coordinates,possibleCoordinate);
+            if(possibleCoordinate.isInBounds() && !hasPiece(possibleCoordinate, color) && noPiecesInBetween(coordinates,possibleCoordinate)) addMove(coordinates,possibleCoordinate);
         }
     }
 
     private void addKnightMoves(Coordinates coordinates) {
-        PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
+        Color color = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
         Coordinates[] possibleCoordinates = new Coordinates[]{
                 new Coordinates(coordinates.getX()-1, coordinates.getY()-2),
                 new Coordinates(coordinates.getX()+1, coordinates.getY()-2),
@@ -277,12 +294,12 @@ public class Board {
                 new Coordinates(coordinates.getX()+2, coordinates.getY()+1),
         };
         for(Coordinates possibleCoordinate:possibleCoordinates){
-            if(possibleCoordinate.isInBounds() && !hasPiece(possibleCoordinate,pieceColor)) addMove(coordinates,possibleCoordinate);
+            if(possibleCoordinate.isInBounds() && !hasPiece(possibleCoordinate, color)) addMove(coordinates,possibleCoordinate);
         }
     }
 
     private void addKingMoves(Coordinates coordinates) {
-        PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
+        Color color = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
         Coordinates[] possibleCoordinates = new Coordinates[]{
                 new Coordinates(coordinates.getX(), coordinates.getY()-1),
                 new Coordinates(coordinates.getX(), coordinates.getY()+1),
@@ -294,7 +311,7 @@ public class Board {
                 new Coordinates(coordinates.getX()+1, coordinates.getY()),
         };
         for(Coordinates possibleCoordinate:possibleCoordinates){
-            if(possibleCoordinate.isInBounds() && !hasPiece(possibleCoordinate,pieceColor)) addMove(coordinates,possibleCoordinate);
+            if(possibleCoordinate.isInBounds() && !hasPiece(possibleCoordinate, color)) addMove(coordinates,possibleCoordinate);
         }
         checkForCastling(coordinates);
     }
@@ -303,28 +320,28 @@ public class Board {
         ArrayList<Coordinates[]> savePossibleMoves = new ArrayList<>();
         savePossibleMoves.addAll(possibleMoves);
         ArrayList<Coordinates> possibleCoordinatesArrayList = new ArrayList<>();
-        PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
-        if(pieceColor==PieceColor.WHITE){
+        Color color = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
+        if(color == Color.WHITE){
             if(!whiteKingHasMoved && !whiteKingChecked){
                 if(!white07RookHasMoved && noPiecesInBetween(coordinates, new Coordinates(0,7))){
                     Coordinates[] move = new Coordinates[]{coordinates, new Coordinates(3,7)};
-                    if(doesntPutKingInCheck(move,PieceColor.WHITE)) possibleCoordinatesArrayList.add(new Coordinates(2,7));
+                    if(doesntPutKingInCheck(move, Color.WHITE)) possibleCoordinatesArrayList.add(new Coordinates(2,7));
                 }
                 if(!white77RookHasMoved && noPiecesInBetween(coordinates, new Coordinates(7,7))){
                     Coordinates[] move = new Coordinates[]{coordinates, new Coordinates(5,7)};
-                    if(doesntPutKingInCheck(move,PieceColor.WHITE)) possibleCoordinatesArrayList.add(new Coordinates(6,7));
+                    if(doesntPutKingInCheck(move, Color.WHITE)) possibleCoordinatesArrayList.add(new Coordinates(6,7));
                 }
             }
         }
-        if(pieceColor==PieceColor.BLACK){
+        if(color == Color.BLACK){
             if(!blackKingHasMoved && !blackKingChecked){
                 if(!black00RookHasMoved && noPiecesInBetween(coordinates, new Coordinates(0,0))){
                     Coordinates[] move = new Coordinates[]{coordinates, new Coordinates(3,0)};
-                    if(doesntPutKingInCheck(move,PieceColor.BLACK)) possibleCoordinatesArrayList.add(new Coordinates(2,0));
+                    if(doesntPutKingInCheck(move, Color.BLACK)) possibleCoordinatesArrayList.add(new Coordinates(2,0));
                 }
                 if(!black70RookHasMoved && noPiecesInBetween(coordinates, new Coordinates(7,0))){
                     Coordinates[] move = new Coordinates[]{coordinates, new Coordinates(5,0)};
-                    if(doesntPutKingInCheck(move,PieceColor.BLACK)) possibleCoordinatesArrayList.add(new Coordinates(6,0));
+                    if(doesntPutKingInCheck(move, Color.BLACK)) possibleCoordinatesArrayList.add(new Coordinates(6,0));
                 }
             }
         }
@@ -335,14 +352,14 @@ public class Board {
     }
 
     private void addRookMoves(Coordinates coordinates) {
-        PieceColor pieceColor = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
+        Color color = getSquareFromCoordinates(coordinates).getSquarePiece().getPieceColor();
         for(int i=0; i<8;i++){
             Coordinates possibleCoordinates = new Coordinates(coordinates.getX(),i);
-            if(!possibleCoordinates.equals(coordinates) && !hasPiece(possibleCoordinates,pieceColor) && noPiecesInBetween(coordinates,possibleCoordinates)){
+            if(!possibleCoordinates.equals(coordinates) && !hasPiece(possibleCoordinates, color) && noPiecesInBetween(coordinates,possibleCoordinates)){
                 addMove(coordinates,possibleCoordinates);
             }
             possibleCoordinates = new Coordinates(i,coordinates.getY());
-            if(!possibleCoordinates.equals(coordinates) && !hasPiece(possibleCoordinates,pieceColor) && noPiecesInBetween(coordinates,possibleCoordinates)){
+            if(!possibleCoordinates.equals(coordinates) && !hasPiece(possibleCoordinates, color) && noPiecesInBetween(coordinates,possibleCoordinates)){
                 addMove(coordinates,possibleCoordinates);
             }
         }
@@ -351,10 +368,10 @@ public class Board {
     private void addPawnMoves(Coordinates coordinates) {
         ChessPiece chessPiece = boardMap.get(coordinates).getSquarePiece();
         int yDirection = 1;
-        PieceColor oppositeColor = PieceColor.WHITE;
+        Color oppositeColor = Color.WHITE;
         if(chessPiece.isWhite()){
             yDirection = -1;
-            oppositeColor = PieceColor.BLACK;
+            oppositeColor = Color.BLACK;
         }
         Coordinates possibleCoordinates = new Coordinates(coordinates.getX(),coordinates.getY()+yDirection);
         if(possibleCoordinates.isInBounds()){
@@ -400,33 +417,33 @@ public class Board {
         if(!coordinates.isInBounds()) return false;
         return boardMap.get(coordinates).getSquarePiece()!=null;
     }
-    private boolean hasPiece(Coordinates coordinates, PieceColor pieceColor){
+    private boolean hasPiece(Coordinates coordinates, Color color){
         ChessPiece piece = boardMap.get(coordinates).getSquarePiece();
         if(piece!=null){
-            return piece.getPieceColor()==pieceColor;
+            return piece.getPieceColor()== color;
         }
         return false;
     }
 
-    public void setKingChecked(PieceColor pieceColor, Boolean boo){
-        if (pieceColor==PieceColor.WHITE){
+    public void setKingChecked(Color color, Boolean boo){
+        if (color == Color.WHITE){
             whiteKingChecked=boo;
         }
-        else if(pieceColor==PieceColor.BLACK){
+        else if(color == Color.BLACK){
             blackKingChecked=boo;
         }
     }
-    private Coordinates getKingCoordinates(PieceColor pc){
-        if(pc==PieceColor.WHITE) return whiteKingCoordinates;
-        else if (pc==PieceColor.BLACK) return blackKingCoordinates;
+    private Coordinates getKingCoordinates(Color pc){
+        if(pc== Color.WHITE) return whiteKingCoordinates;
+        else if (pc== Color.BLACK) return blackKingCoordinates;
         else return null;
     }
 
-    public void setCheckMated(PieceColor pieceColor){
-        if(pieceColor==PieceColor.WHITE){
+    public void setCheckMated(Color color){
+        if(color == Color.WHITE){
             gameStatus=GameStatus.WHITE_CHECKMATED;
         }
-        else if(pieceColor==PieceColor.BLACK){
+        else if(color == Color.BLACK){
             gameStatus=GameStatus.BLACK_CHECKMATED;
         }
         else{
@@ -483,11 +500,11 @@ public class Board {
         setLegalMoves();
         return legalMoves;
     }
-    public void setKingCoordinates(PieceColor pieceColor, Coordinates coordinates){
-        if(pieceColor==PieceColor.WHITE){
+    public void setKingCoordinates(Color color, Coordinates coordinates){
+        if(color == Color.WHITE){
             whiteKingCoordinates.setCoordinates(coordinates);
         }
-        else if(pieceColor==PieceColor.BLACK){
+        else if(color == Color.BLACK){
             blackKingCoordinates.setCoordinates(coordinates);
         }
     }
@@ -510,17 +527,17 @@ public class Board {
         this.passedPawn=cor;
     }
 
-    public boolean getKingChecked(PieceColor pieceColor){
-        if(pieceColor==PieceColor.WHITE){
+    public boolean getKingChecked(Color color){
+        if(color == Color.WHITE){
             return whiteKingChecked;
         }
         else return blackKingChecked;
     }
-    public void setKingHasMoved(PieceColor pieceColor){
-        if(pieceColor==PieceColor.WHITE){
+    public void setKingHasMoved(Color color){
+        if(color == Color.WHITE){
             whiteKingHasMoved=true;
         }
-        if(pieceColor==PieceColor.BLACK){
+        if(color == Color.BLACK){
             blackKingHasMoved=true;
         }
     }
@@ -574,7 +591,7 @@ public class Board {
         return "move does not correspond to piece";
     }
     private boolean wrongTurn(Coordinates initial){
-        if((whitesTurn && !hasPiece(initial,PieceColor.WHITE)) || (!whitesTurn && hasPiece(initial,PieceColor.WHITE))) return true;
+        if((whitesTurn && !hasPiece(initial, Color.WHITE)) || (!whitesTurn && hasPiece(initial, Color.WHITE))) return true;
         return false;
     }
 

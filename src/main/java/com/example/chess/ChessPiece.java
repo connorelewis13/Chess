@@ -2,10 +2,10 @@ package com.example.chess;
 
 public class ChessPiece {
     private PieceType pieceType;
-    private PieceColor pieceColor;
+    private Color color;
 
-    public ChessPiece(PieceColor pieceColor,PieceType pieceType){
-        this.pieceColor=pieceColor;
+    public ChessPiece(Color color, PieceType pieceType){
+        this.color = color;
         this.pieceType=pieceType;
     }
     public PieceType getPieceType() {
@@ -15,30 +15,30 @@ public class ChessPiece {
         this.pieceType = pieceType;
     }
 
-    public PieceColor getPieceColor() {
-        return pieceColor;
+    public Color getPieceColor() {
+        return color;
     }
-    public void setPieceColor(PieceColor pieceColor) {
-        this.pieceColor = pieceColor;
+    public void setPieceColor(Color color) {
+        this.color = color;
     }
 
     @Override
     public String toString(){
-        if(this.pieceColor==PieceColor.BLACK) return "B." + this.pieceType+" ";
-        else if(this.pieceColor==PieceColor.WHITE) return "W." + this.pieceType+" ";
+        if(this.color == Color.BLACK) return "B." + this.pieceType+" ";
+        else if(this.color == Color.WHITE) return "W." + this.pieceType+" ";
         return "";
     }
     public boolean isWhite(){
-        if(pieceColor==PieceColor.WHITE) return true;
+        if(color == Color.WHITE) return true;
         else return false;
     }
     public boolean isBlack(){
-        if(pieceColor==PieceColor.BLACK) return true;
+        if(color == Color.BLACK) return true;
         else return false;
     }
     public boolean isSameColor(ChessPiece chessPiece){
         if(chessPiece==null) return false;
-        if(this.pieceColor == chessPiece.getPieceColor()) return true;
+        if(this.color == chessPiece.getPieceColor()) return true;
         else return false;
     }
 }

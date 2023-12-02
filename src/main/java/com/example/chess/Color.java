@@ -1,10 +1,10 @@
 package com.example.chess;
 
-public enum PieceColor {
+public enum Color {
     WHITE,
     BLACK;
 
-    public PieceColor oppositeColor(){
+    public Color oppositeColor(){
         if(this==WHITE) return BLACK;
         else if(this==BLACK) return WHITE;
         else return null;

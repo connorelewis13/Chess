@@ -30,29 +30,29 @@ public class Move {
         ArrayList<Coordinates[]> legalMoves = board.getLegalMoves();
         ChessPiece piece = board.getSquareFromCoordinates(initialCoordinates).getSquarePiece();
         ChessPiece otherPiece = board.getSquareFromCoordinates(finalCoordinates).getSquarePiece();
-        if (piece==null) throw new IllegalArgumentException("Piece is Null");
+        if (piece==null) throw new IllegalArgumentException("Did not select a piece");
         if (!isValidMove()) throw new IllegalArgumentException(board.whyNotLegal(initialCoordinates,finalCoordinates));
-        if(board.isWhitesTurn() && piece.getPieceColor()==PieceColor.WHITE){
+        if(board.isWhitesTurn() && piece.getPieceColor()== Color.WHITE){
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
             setBoardPieceConditions(0);
             board.setWhitesTurn(false);
-            board.setKingChecked(PieceColor.WHITE,false);
+            board.setKingChecked(Color.WHITE,false);
             legalMoves = board.getLegalMoves();
-            if(legalMoves.size()==0 && board.getKingChecked(PieceColor.BLACK)) board.setCheckMated(PieceColor.BLACK);
+            if(legalMoves.size()==0 && board.getKingChecked(Color.BLACK)) board.setCheckMated(Color.BLACK);
             else if(legalMoves.size()==0) board.setStaleMate();
         }
-        else if (!board.isWhitesTurn() && piece.getPieceColor()==PieceColor.BLACK) {
+        else if (!board.isWhitesTurn() && piece.getPieceColor()== Color.BLACK) {
             board.putPiece(initialCoordinates,null);
             board.putPiece(finalCoordinates,piece);
             setBoardPieceConditions(7);
             board.setWhitesTurn(true);
-            board.setKingChecked(PieceColor.BLACK,false);
+            board.setKingChecked(Color.BLACK,false);
             legalMoves = board.getLegalMoves();
-            if(legalMoves.size()==0 && board.getKingChecked(PieceColor.WHITE)) board.setCheckMated(PieceColor.WHITE);
+            if(legalMoves.size()==0 && board.getKingChecked(Color.WHITE)) board.setCheckMated(Color.WHITE);
             else if(legalMoves.size()==0) board.setStaleMate();
         }
-        else throw new IllegalArgumentException("Not your turn");
+        else throw new IllegalArgumentException("Wrong Turn");
     }
 
     private void setBoardPieceConditions(int endOfBoard) {
@@ -62,16 +62,16 @@ public class Move {
                 new Coordinates(7,7),
                 new Coordinates(7,0),
         };
-        PieceColor pieceColor = piece1.getPieceColor();
+        Color color = piece1.getPieceColor();
         if(piece1.getPieceType()==PieceType.KING){
-            board.setKingCoordinates(pieceColor,finalCoordinates);
+            board.setKingCoordinates(color,finalCoordinates);
             if(Math.abs(xf-xi)==2){
                 Coordinates oldRookCoordinates = board.getRookCastledWithOldCoor(finalCoordinates);
                 Coordinates newRookCoordinates = board.getRookCastledWithNewCoor(finalCoordinates);
                 board.putPiece(oldRookCoordinates,null);
-                board.putPiece(newRookCoordinates, new ChessPiece(pieceColor,PieceType.ROOK));
+                board.putPiece(newRookCoordinates, new ChessPiece(color,PieceType.ROOK));
             }
-            board.setKingHasMoved(pieceColor);
+            board.setKingHasMoved(color);
         }
         else if(piece1.getPieceType()==PieceType.ROOK){
             for(Coordinates c:startingCoordinates){
