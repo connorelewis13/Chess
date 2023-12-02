@@ -583,12 +583,12 @@ public class Board {
 
     public String whyNotLegal(Coordinates c1, Coordinates c2){
         Coordinates[] coordinates = {c1,c2};
-        if(legalMoves.contains(coordinates)) return "Move is valid";
-        else if(!c2.isInBounds()) return "Final coor is out of bounds";
-        else if(!doesntPutKingInCheck(coordinates,getSquareFromCoordinates(c1).getSquarePiece().getPieceColor())) return "puts your king in check";
-        else if(hasPiece(c2,getSquareFromCoordinates(c1).getSquarePiece().getPieceColor())) return "other piece is same color";
-        else if(wrongTurn(c1)) return "wrong turn";
-        return "move does not correspond to piece";
+        if(legalMoves.contains(coordinates)) return "";
+        //else if(!c2.isInBounds()) return "Final coor is out of bounds";
+        else if(!doesntPutKingInCheck(coordinates,getSquareFromCoordinates(c1).getSquarePiece().getPieceColor())) return "This move puts your king in check";
+        else if(hasPiece(c2,getSquareFromCoordinates(c1).getSquarePiece().getPieceColor())) return "The attacked piece is the same color";
+        else if(wrongTurn(c1)) return "Not your turn";
+        return "Move does not correspond to selected piece";
     }
     private boolean wrongTurn(Coordinates initial){
         if((whitesTurn && !hasPiece(initial, Color.WHITE)) || (!whitesTurn && hasPiece(initial, Color.WHITE))) return true;

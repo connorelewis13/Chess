@@ -10,6 +10,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
+import java.util.ArrayList;
+
 public class ChessController {
     @FXML private HBox changePawnHbox;
     @FXML private GridPane BoardGridPane;
@@ -127,33 +129,7 @@ public class ChessController {
                     changePawnHbox.setVisible(true);
                     changePawnHbox.setManaged(true);
                 }
-                if(ChessApplication.chessBoard.getGameStatus()==GameStatus.WHITE_CHECKMATED){
-                    WinnerLabel.setVisible(true);
-                    WinnerLabel.setManaged(true);
-                    turnHbox.setManaged(false);
-                    turnHbox.setVisible(false);
-                    ErrorLabel.setManaged(false);
-                    ErrorLabel.setVisible(false);
-                    WinnerLabel.setText("Black Won!");
-                }
-                else if(ChessApplication.chessBoard.getGameStatus()==GameStatus.BLACK_CHECKMATED){
-                    WinnerLabel.setVisible(true);
-                    WinnerLabel.setManaged(true);
-                    turnHbox.setManaged(false);
-                    turnHbox.setVisible(false);
-                    ErrorLabel.setManaged(false);
-                    ErrorLabel.setVisible(false);
-                    WinnerLabel.setText("White Won!");
-                }
-                else if(ChessApplication.chessBoard.getGameStatus()==GameStatus.STALEMATE){
-                    WinnerLabel.setVisible(true);
-                    WinnerLabel.setManaged(true);
-                    turnHbox.setManaged(false);
-                    turnHbox.setVisible(false);
-                    ErrorLabel.setManaged(false);
-                    ErrorLabel.setVisible(false);
-                    WinnerLabel.setText("Stalemate");
-                }
+                checkWinConditions();
                 //ErrorLabel.setText(""+ChessApplication.chessBoard.getPassedPawn());
             }
             catch (IllegalArgumentException e){
@@ -163,6 +139,44 @@ public class ChessController {
             }
         }
     };
+
+    private void checkWinConditions() {
+        ArrayList<Coordinates[]> legalMoves = ChessApplication.chessBoard.getLegalMoves();
+        if(ChessApplication.chessBoard.isWhitesTurn()){
+            if(legalMoves.size()==0 && ChessApplication.chessBoard.getKingChecked(Color.WHITE)) ChessApplication.chessBoard.setCheckMated(Color.WHITE);
+            else if(legalMoves.size()==0) ChessApplication.chessBoard.setStaleMate();
+        } else{
+            if(legalMoves.size()==0 && ChessApplication.chessBoard.getKingChecked(Color.BLACK)) ChessApplication.chessBoard.setCheckMated(Color.BLACK);
+            else if(legalMoves.size()==0) ChessApplication.chessBoard.setStaleMate();
+        }
+        if(ChessApplication.chessBoard.getGameStatus()==GameStatus.WHITE_CHECKMATED){
+            WinnerLabel.setVisible(true);
+            WinnerLabel.setManaged(true);
+            turnHbox.setManaged(false);
+            turnHbox.setVisible(false);
+            ErrorLabel.setManaged(false);
+            ErrorLabel.setVisible(false);
+            WinnerLabel.setText("Black Won!");
+        }
+        else if(ChessApplication.chessBoard.getGameStatus()==GameStatus.BLACK_CHECKMATED){
+            WinnerLabel.setVisible(true);
+            WinnerLabel.setManaged(true);
+            turnHbox.setManaged(false);
+            turnHbox.setVisible(false);
+            ErrorLabel.setManaged(false);
+            ErrorLabel.setVisible(false);
+            WinnerLabel.setText("White Won!");
+        }
+        else if(ChessApplication.chessBoard.getGameStatus()==GameStatus.STALEMATE){
+            WinnerLabel.setVisible(true);
+            WinnerLabel.setManaged(true);
+            turnHbox.setManaged(false);
+            turnHbox.setVisible(false);
+            ErrorLabel.setManaged(false);
+            ErrorLabel.setVisible(false);
+            WinnerLabel.setText("Stalemate");
+        }
+    }
 
     private String getPieceStringOnSquare(int x, int y) {
         Square square = ChessApplication.chessBoard.getSquareFromCoordinates(new Coordinates(x,y));
@@ -185,6 +199,7 @@ public class ChessController {
         ChessApplication.chessBoard.setPassedPawn(null);
         changePawnHbox.setVisible(false);
         changePawnHbox.setManaged(false);
+        checkWinConditions();
     }
 
     public void rookButtonPressed(ActionEvent actionEvent) {
@@ -195,6 +210,7 @@ public class ChessController {
         ChessApplication.chessBoard.setPassedPawn(null);
         changePawnHbox.setVisible(false);
         changePawnHbox.setManaged(false);
+        checkWinConditions();
     }
 
     public void knightButtonPressed(ActionEvent actionEvent) {
@@ -205,6 +221,7 @@ public class ChessController {
         ChessApplication.chessBoard.setPassedPawn(null);
         changePawnHbox.setVisible(false);
         changePawnHbox.setManaged(false);
+        checkWinConditions();
     }
 
     public void bishopButtonPressed(ActionEvent actionEvent) {
@@ -215,5 +232,6 @@ public class ChessController {
         ChessApplication.chessBoard.setPassedPawn(null);
         changePawnHbox.setVisible(false);
         changePawnHbox.setManaged(false);
+        checkWinConditions();
     }
 }
